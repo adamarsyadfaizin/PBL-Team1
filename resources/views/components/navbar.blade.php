@@ -1,0 +1,43 @@
+<nav class="nav">
+    <a href="{{ route('home') }}" class="nav__logo">
+        <img src="{{ asset('images/logo.png') }}" alt="Berlima Logo" class="nav__logo-img" onerror="this.style.display='none'">
+        <span class="nav__logo-text">Berlima</span>
+        <span class="nav__logo-dot"></span>
+    </a>
+
+    <ul class="nav__links">
+        <li>
+            <a href="{{ route('home') }}" 
+               class="nav__link {{ request()->routeIs('home') ? 'active' : '' }}">
+               Home
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('home') }}#rooms" class="nav__link">
+               Rooms
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('home') }}#facilities" class="nav__link">
+               About
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('home') }}#testimonials" class="nav__link">
+               Gallery
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('contact') }}" 
+               class="nav__link {{ request()->routeIs('contact') ? 'active' : '' }}">
+               Contact
+            </a>
+        </li>
+    </ul>
+
+    <button class="nav__btn-login">Login</button>
+</nav>
