@@ -1,0 +1,56 @@
+/* ─── FASILITAS / FEATURES ────────────────────────── */
+.facilities {
+  background: #0b0b0b;
+}
+
+.facilities-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.facilities-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 56px;
+}
+
+.fac-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.fac-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px 24px;
+  transition: border-color .3s, transform .3s;
+  cursor: default;
+}
+
+.fac-card:hover {
+  border-color: rgba(67,97,238,.35);
+  transform: translateY(-4px);
+}
+
+.fac-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+}
+
+.fac-icon.blue   { background: rgba(67,97,238,.15); color: #7b93ff; }
+.fac-icon.orange { background: rgba(244,136,42,.15); color: var(--orange); }
+.fac-icon.green  { background: rgba(34,197,94,.15);  color: #4ade80; }
+.fac-icon.purple { background: rgba(168,85,247,.15); color: #c084fc; }
+.fac-icon.pink   { background: rgba(236,72,153,.15); color: #f472b6; }
+.fac-icon.cyan   { background: rgba(6,182,212,.15);  color: #22d3ee; }
+.fac-icon.yellow { background: rgba(234,179,8,.15);  color: #facc15; }
+.fac-icon.red    { background: rgba(239,68,68,.15);  color: #f87171; }
+
+.fac-card h4 { font-size: .95rem; font-weight: 600; margin-bottom: 6px; }
+.fac-card p  { color: var(--muted); font-size: .8rem; line-height: 1.5; }
