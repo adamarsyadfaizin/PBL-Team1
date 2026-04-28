@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Berlima Guest House</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0e0e0e;
+      --bg-card:   #161616;
+      --accent:    #4361EE;
+      --orange:    #F4882A;
+      --text:      #f0f0f0;
+      --muted:     #888;
+      --border:    rgba(255,255,255,.07);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAVBAR ─────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 60px;
+      height: 70px;
+      background: rgba(14,14,14,.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    /* Logo: ganti src dengan path logo Berlima kamu */
+    .nav-logo img {
+      height: 34px;
+      object-fit: contain;
+    }
+
+    /* Fallback teks jika gambar belum ada */
+    .nav-logo-text {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--text);
+      letter-spacing: -.5px;
+    }
+
+    .nav-logo-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 500;
+      opacity: .75;
+      transition: opacity .2s;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    .btn-login {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 26px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+
+    .btn-login:hover {
+      background: #2f4ed4;
+      transform: translateY(-1px);
+    }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 60px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle radial glow kiri */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: -120px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(67,97,238,.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      flex: 1;
+      max-width: 560px;
+      position: relative;
+      z-index: 2;
+      animation: fadeUp .7s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    /* Lingkaran oranye dekoratif */
+    .hero-title .orange-blob {
+      position: absolute;
+      top: -18px;
+      left: 180px;
+      width: 52px; height: 52px;
+      background: var(--orange);
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .hero-subtitle {
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.65;
+      max-width: 400px;
+      margin-bottom: 36px;
+      animation: fadeUp .7s .15s ease both;
+    }
+
+    /* ─── SEARCH BAR ─────────────────────────────────── */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #1a1a1a;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      max-width: 460px;
+      margin-bottom: 52px;
+      transition: border-color .2s;
+      animation: fadeUp .7s .25s ease both;
+    }
+
+    .search-bar:focus-within {
+      border-color: rgba(67,97,238,.5);
+    }
+
+    .search-bar svg { flex-shrink: 0; }
+
+    .search-bar input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-size: .9rem;
+    }
+
+    .search-bar input::placeholder { color: var(--muted); }
+
+    .search-btn {
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      width: 36px; height: 36px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background .2s;
+    }
+
+    .search-btn:hover { background: #2f4ed4; }
+
+    /* ─── STATS ──────────────────────────────────────── */
+    .stats {
+      display: flex;
+      gap: 48px;
+      animation: fadeUp .7s .35s ease both;
+    }
+
+    .stat-value {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .stat-value .plus { color: var(--accent); }
+    .stat-value .star { font-size: 1.4rem; }
+
+    .stat-label {
+      font-size: .8rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ─── HERO IMAGE ──────────────────────────────────── */
+    .hero-image-wrap {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      animation: fadeIn .9s .1s ease both;
+    }
+
+    .arch-frame {
+      width: clamp(300px, 35vw, 420px);
+      aspect-ratio: 4/5;
+      border-radius: 300px 300px 0 0;
+      overflow: hidden;
+      position: relative;
+      border: 2px solid rgba(255,255,255,.06);
+      box-shadow: 0 40px 100px rgba(0,0,0,.6);
+    }
+
+    /* Ganti src gambar hotel di sini */
+    .arch-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s ease;
+    }
+
+    .arch-frame:hover img { transform: scale(1.04); }
+
+    /* Placeholder jika gambar belum ada */
+    .arch-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, #1c2a4a 0%, #263352 40%, #1a1f2e 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: rgba(255,255,255,.25);
+      font-size: .85rem;
+    }
+
+    .arch-placeholder svg { opacity: .3; }
+
+    /* Decorative dot atas kanan arch */
+    .arch-dot {
+      position: absolute;
+      width: 12px; height: 12px;
+      background: var(--text);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+    }
+
+    .arch-dot.tl { top: 22%; right: 8%; }
+    .arch-dot.br { top: 50%; right: 4%; }
+
+    /* ─── ANIMATIONS ─────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(.96); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes floatY {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-10px); }
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ─── SHARED SECTION STYLES ───────────────────────── */
+    section { padding: 100px 60px; position: relative; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(67,97,238,.12);
+      border: 1px solid rgba(67,97,238,.25);
+      color: var(--accent);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -.5px;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.7;
+      max-width: 460px;
+    }
+
+    /* ─── HOW IT WORKS ────────────────────────────────── */
+    .how {
+      background: #0b0b0b;
+      overflow: hidden;
+    }
+
+    .how-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .how-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-top: 40px;
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 24px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      transition: border-color .3s, transform .3s;
+      cursor: default;
+    }
+
+    .step:hover {
+      border-color: rgba(67,97,238,.4);
+      transform: translateX(6px);
+    }
+
+    .step-num {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: .95rem;
+      flex-shrink: 0;
+    }
+
+    .step-num.orange { background: var(--orange); }
+    .step-num.green  { background: #22c55e; }
+
+    .step-body h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .step-body p { color: var(--muted); font-size: .85rem; line-height: 1.6; }
+
+    .how-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .how-card-big {
+      width: 320px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      animation: floatY 4s ease-in-out infinite;
+      box-shadow: 0 30px 80px rgba(0,0,0,.5);
+    }
+
+    .how-card-img {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #1a2744, #0f1a36, #1e3a5f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .how-card-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, var(--bg-card));
+    }
+
+    .how-card-img svg { opacity: .2; }
+
+    .how-card-body { padding: 20px; }
+
+    .how-card-body h4 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+    .how-card-body p  { color: var(--muted); font-size: .8rem; }
+
+    .how-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .how-price { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+    .how-price span { font-size: .75rem; font-weight: 400; color: var(--muted); }
+
+    .btn-sm {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Floating badge */
+    .badge-float {
+      position: absolute;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.4);
+    }
+
+    .badge-float.top-right {
+      top: -20px; right: -30px;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .badge-float.bottom-left {
+      bottom: -20px; left: -30px;
+    }
+
+    .badge-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(67,97,238,.15);
+      display: grid;
+      place-items: center;
+    }
+
+    .badge-float h5 { font-size: .8rem; font-weight: 600; margin-bottom: 2px; }
+    .badge-float p  { font-size: .7rem; color: var(--muted); }
+
+    .stars-row { display: flex; gap: 2px; margin-top: 4px; }
+    .stars-row span { color: #f4882a; font-size: .75rem; }
+
+    /* ─── ROOMS ───────────────────────────────────────── */
+    .rooms { background: var(--bg); }
+
+    .rooms-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 52px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .room-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+      cursor: pointer;
+    }
+
+    .room-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(67,97,238,.35);
+      box-shadow: 0 24px 60px rgba(67,97,238,.08);
+    }
+
+    .room-card.featured {
+      border-color: rgba(67,97,238,.4);
+      background: linear-gradient(160deg, #111827 0%, #161616 100%);
+    }
+
+    .room-img {
+      width: 100%; height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .room-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .room-img-placeholder.deluxe  { background: linear-gradient(135deg,#1a2744,#0f1a36); }
+    .room-img-placeholder.suite   { background: linear-gradient(135deg,#2a1a44,#1a0f36); }
+    .room-img-placeholder.standard{ background: linear-gradient(135deg,#1a2a1a,#0f360f); }
+
+    .room-img-placeholder svg { opacity: .2; }
+
+    .room-tag {
+      position: absolute;
+      top: 14px; left: 14px;
+      background: rgba(14,14,14,.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--text);
+      font-size: .7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    .room-tag.popular { background: rgba(244,136,42,.15); border-color: rgba(244,136,42,.4); color: var(--orange); }
+    .room-tag.best    { background: rgba(67,97,238,.15); border-color: rgba(67,97,238,.4); color: #7b93ff; }
+
+    .room-body { padding: 20px; }
+
+    .room-type {
+      font-size: .7rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .room-name { font-size: 1.05rem; font-weight: 600; margin-bottom: 12px; }
+
+    .room-amenities {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .amenity-chip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--muted);
+      font-size: .75rem;
+    }
+
+    .amenity-chip svg { color: var(--accent); }
+
+    .room-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .room-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .room-price small {
+      font-size: .72rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .btn-book {
+      background: transparent;
+      color: var(--accent);
+      border: 1.5px solid rgba(67,97,238,.5);
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .btn-book:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: .85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+      text-decoration: none;
+    }
+
+    .btn-outline:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+
+    /* ─── FASILITAS ───────────────────────────────────── */
+    .facilities {
+      background: #0b0b0b;
+    }
+
+    .facilities-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .facilities-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+    }
+
+    .fac-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .fac-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 24px;
+      transition: border-color .3s, transform .3s;
+      cursor: default;
+    }
+
+    .fac-card:hover {
+      border-color: rgba(67,97,238,.35);
+      transform: translateY(-4px);
+    }
+
+    .fac-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+    }
+
+    .fac-icon.blue   { background: rgba(67,97,238,.15); color: #7b93ff; }
+    .fac-icon.orange { background: rgba(244,136,42,.15); color: var(--orange); }
+    .fac-icon.green  { background: rgba(34,197,94,.15);  color: #4ade80; }
+    .fac-icon.purple { background: rgba(168,85,247,.15); color: #c084fc; }
+    .fac-icon.pink   { background: rgba(236,72,153,.15); color: #f472b6; }
+    .fac-icon.cyan   { background: rgba(6,182,212,.15);  color: #22d3ee; }
+    .fac-icon.yellow { background: rgba(234,179,8,.15);  color: #facc15; }
+    .fac-icon.red    { background: rgba(239,68,68,.15);  color: #f87171; }
+
+    .fac-card h4 { font-size: .95rem; font-weight: 600; margin-bottom: 6px; }
+    .fac-card p  { color: var(--muted); font-size: .8rem; line-height: 1.5; }
+
+    /* ─── TESTIMONIALS ────────────────────────────────── */
+    .testimonials { background: var(--bg); overflow: hidden; }
+
+    .testi-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .testi-head {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .testi-head .section-sub { margin: 0 auto; }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .testi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      transition: border-color .3s, transform .3s;
+    }
+
+    .testi-card:hover {
+      border-color: rgba(67,97,238,.3);
+      transform: translateY(-6px);
+    }
+
+    .testi-card.featured {
+      background: linear-gradient(135deg, #111827, #0d1424);
+      border-color: rgba(67,97,238,.3);
+    }
+
+    .quote-icon {
+      font-size: 2.5rem;
+      line-height: 1;
+      color: var(--accent);
+      opacity: .4;
+      margin-bottom: 16px;
+      font-family: Georgia, serif;
+    }
+
+    .testi-text {
+      color: rgba(240,240,240,.8);
+      font-size: .875rem;
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: .9rem;
+      flex-shrink: 0;
+    }
+
+    .avatar.a { background: linear-gradient(135deg,#4361ee,#7b93ff); }
+    .avatar.b { background: linear-gradient(135deg,#f4882a,#fbbf24); }
+    .avatar.c { background: linear-gradient(135deg,#22c55e,#4ade80); }
+
+    .author-info h5 { font-size: .875rem; font-weight: 600; }
+    .author-info p  { color: var(--muted); font-size: .75rem; margin-top: 2px; }
+
+    .testi-stars { display: flex; gap: 2px; margin-bottom: 12px; }
+    .testi-stars span { color: #f4882a; font-size: .85rem; }
+
+    /* ─── CTA ─────────────────────────────────────────── */
+    .cta {
+      background: #0b0b0b;
+      padding: 80px 60px;
+    }
+
+    .cta-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #111827 0%, #0d1424 50%, #111520 100%);
+      border: 1px solid rgba(67,97,238,.25);
+      border-radius: 28px;
+      padding: 70px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-inner::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(67,97,238,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-inner::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, rgba(244,136,42,.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-text { position: relative; z-index: 1; }
+    .cta-text h2 { font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 700; margin-bottom: 12px; }
+    .cta-text p  { color: var(--muted); font-size: .9rem; max-width: 400px; line-height: 1.65; }
+
+    .cta-actions {
+      display: flex;
+      gap: 14px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover { background: #2f4ed4; transform: translateY(-2px); }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: #080808;
+      border-top: 1px solid var(--border);
+      padding: 60px 60px 36px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 52px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-brand p {
+      color: var(--muted);
+      font-size: .85rem;
+      line-height: 1.7;
+      margin: 16px 0 24px;
+      max-width: 260px;
+    }
+
+    .footer-socials { display: flex; gap: 10px; }
+
+    .social-btn {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .social-btn:hover { border-color: rgba(67,97,238,.4); background: rgba(67,97,238,.08); color: var(--text); }
+
+    .footer-col h5 {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+    .footer-col ul a {
+      color: rgba(240,240,240,.65);
+      text-decoration: none;
+      font-size: .85rem;
+      transition: color .2s;
+    }
+
+    .footer-col ul a:hover { color: var(--text); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 28px;
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    /* ─── SCROLL REVEAL ───────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAVBAR ─────────────────────────────────────── -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <!--
+        Ganti komentar di bawah dengan tag <img> jika kamu punya file logo:
+        <img src="logo-berlima.png" alt="Berlima" />
+      -->
+      <span class="nav-logo-text">Berlima</span>
+      <span class="nav-logo-dot"></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#">Properties</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Add Property</a></li>
+    </ul>
+
+    <button class="btn-login">Login</button>
+  </nav>
+
+  <!-- ─── HERO ───────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-content">
+
+      <h1 class="hero-title">
+        <span class="orange-blob"></span>
+        Discover<br>
+        Berlima Guest<br>
+        House
+      </h1>
+
+      <p class="hero-subtitle">
+        Nikmati hunian nyaman dengan fasilitas lengkap dan lokasi strategis.<br>
+        Forget all difficulties in finding a residence for you
+      </p>
+
+      <div class="search-bar">
+        <!-- Pin icon -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4361EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+        <input type="text" placeholder="Search by title/city/country..." />
+        <button class="search-btn" aria-label="Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="stats">
+        <div>
+          <div class="stat-value">12 <span class="plus">+</span></div>
+          <div class="stat-label">Jumlah Kamar</div>
+        </div>
+        <div>
+          <div class="stat-value">5 <span class="star">⭐</span></div>
+          <div class="stat-label">Rating</div>
+        </div>
+        <div>
+          <div class="stat-value">28 <span class="plus">+</span></div>
+          <div class="stat-label">Ulasan Positif</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Hero Image -->
+    <div class="hero-image-wrap">
+      <div class="arch-frame">
+        <!--
+          Ganti placeholder di bawah dengan tag <img> jika kamu punya foto hotel:
+          <img src="hotel.jpg" alt="Berlima Guest House" />
+        -->
+        <div class="arch-placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <span>Foto Hotel</span>
+        </div>
+        <span class="arch-dot tl"></span>
+        <span class="arch-dot br"></span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─── HOW IT WORKS ────────────────────────────────── -->
+  <section class="how">
+    <div class="how-inner">
+      <div>
+        <span class="section-label reveal">✦ Cara Pemesanan</span>
+        <h2 class="section-title reveal">Booking Kamar<br>Semudah 3 Langkah</h2>
+        <p class="section-sub reveal">Proses reservasi kami dirancang simpel dan cepat — dari pilih kamar hingga check-in, semua bisa dilakukan dalam hitungan menit.</p>
+
+        <div class="how-steps">
+          <div class="step reveal">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <h4>Pilih Kamar yang Kamu Suka</h4>
+              <p>Jelajahi koleksi kamar kami — dari Standar hingga Suite. Filter berdasarkan harga, kapasitas, atau fasilitas.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num orange">02</div>
+            <div class="step-body">
+              <h4>Tentukan Tanggal & Tamu</h4>
+              <p>Pilih tanggal check-in & check-out, jumlah tamu, dan kebutuhan tambahan seperti sarapan atau late checkout.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num green">03</div>
+            <div class="step-body">
+              <h4>Konfirmasi & Bayar</h4>
+              <p>Bayar dengan berbagai metode pembayaran. Konfirmasi booking langsung dikirim ke email kamu.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="how-visual reveal">
+        <div class="how-card-big">
+          <div class="how-card-img">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+          </div>
+          <div class="how-card-body">
+            <h4>Deluxe King Room</h4>
+            <p>Kamar Lantai 3 · 2 Tamu</p>
+            <div class="how-card-footer">
+              <div class="how-price">Rp 450k <span>/ malam</span></div>
+              <button class="btn-sm">Pesan</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="badge-float top-right">
+          <div class="badge-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4361EE" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div>
+            <h5>Booking Terkonfirmasi</h5>
+            <p>Check-in 3 Jan 2025</p>
+          </div>
+        </div>
+
+        <div class="badge-float bottom-left">
+          <div class="stars-row">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <h5 style="margin-top:6px;font-size:.8rem;">Tamu Puas</h5>
+          <p style="font-size:.7rem;color:var(--muted);">28+ ulasan positif</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ROOMS ────────────────────────────────────────── -->
+  <section class="rooms">
+    <div class="rooms-head reveal">
+      <div>
+        <span class="section-label">🛏 Kamar Tersedia</span>
+        <h2 class="section-title">Pilih Kamar<br>Favorit Kamu</h2>
+      </div>
+      <a href="#" class="btn-outline">
+        Lihat Semua
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <div class="rooms-grid">
+      <!-- Kamar 1 -->
+      <div class="room-card reveal">
+        <div class="room-img">
+          <div class="room-img-placeholder deluxe">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <span class="room-tag popular">🔥 Terpopuler</span>
+        </div>
+        <div class="room-body">
+          <div class="room-type">Deluxe Room</div>
+          <div class="room-name">Deluxe King Bed Room</div>
+          <div class="room-amenities">
+            <div class="amenity-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              2 Tamu
+            </div>
+            <div class="amenity-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              TV
+            </div>
+            <div class="amenity-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+              WiFi
+            </div>
+          </div>
+          <div class="room-footer">
+            <div class="room-price">Rp 450k <small>/ malam</small></div>
+            <button class="btn-book">Pesan Sekarang</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kamar 2 -->
+      <div class="room-card featured reveal">
+        <div class="room-img">
+          <div class="room-img-placeholder suite">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <span class="room-tag best">⭐ Best Value</span>
+        </div>
+        <div class="room-body">
+          <div class="room-type">Suite Room</div>
+          <div class="room-name">Executive Suite Room</div>
+          <div class="room-amenities">
+            <div class="amenity-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+              4 Tamu
+            </div>
+            <div class="amenity-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v5"/><circle cx="17" cy="17" r="3"/><path d="m21 21-1.5-1.5"/></svg>
+              Balkon
+            </div>
+            <div class="amenity-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+              WiFi
+            </div>
+          </div>
+          <div class="room-footer">
+            <div class="room-price">Rp 750k <small>/ malam</small></div>
+            <button class="btn-book">Pesan Sekarang</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kamar 3 -->
+      <div class="room-card reveal">
+        <div class="room-img">
+          <div class="room-img-placeholder standard">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <span class="room-tag">Standar</span>
+        </div>
+        <div class="room-body">
+          <div class="room-type">Standard Room</div>
+          <div class="room-name">Standard Twin Room</div>
+          <div class="room-amenities">
+            <div class="amenity-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              2 Tamu
+            </div>
+            <div class="amenity-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+              TV
+            </div>
+            <div class="amenity-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+              WiFi
+            </div>
+          </div>
+          <div class="room-footer">
+            <div class="room-price">Rp 280k <small>/ malam</small></div>
+            <button class="btn-book">Pesan Sekarang</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FASILITAS ─────────────────────────────────────── -->
+  <section class="facilities">
+    <div class="facilities-inner">
+      <div class="facilities-head">
+        <div>
+          <span class="section-label reveal">✦ Fasilitas</span>
+          <h2 class="section-title reveal">Semua yang Kamu<br>Butuhkan Ada di Sini</h2>
+        </div>
+        <p class="section-sub reveal" style="text-align:right;">Nikmati berbagai fasilitas premium yang kami sediakan untuk memastikan kenyamanan selama menginap.</p>
+      </div>
+
+      <div class="fac-grid">
+        <div class="fac-card reveal">
+          <div class="fac-icon blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+          </div>
+          <h4>WiFi Super Cepat</h4>
+          <p>Koneksi internet fiber hingga 100 Mbps tersedia di seluruh area.</p>
+        </div>
+        <div class="fac-card reveal">
+          <div class="fac-icon orange">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          </div>
+          <h4>Sarapan Gratis</h4>
+          <p>Nikmati sarapan pagi dengan menu beragam setiap hari.</p>
+        </div>
+        <div class="fac-card reveal">
+          <div class="fac-icon green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <h4>Antar Jemput</h4>
+          <p>Layanan jemput dari stasiun atau bandara terdekat.</p>
+        </div>
+        <div class="fac-card reveal">
+          <div class="fac-icon purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h4>Smart TV 43"</h4>
+          <p>Nikmati hiburan dengan TV layar lebar di setiap kamar.</p>
+        </div>
+        <div class="fac-card reveal">
+          <div class="fac-icon pink">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h4>Pelayanan 24 Jam</h4>
+          <p>Staff kami siap melayani kebutuhan Anda kapan saja.</p>
+        </div>
+        <div class="fac-card reveal">
+          <div class="fac-icon cyan">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h4>Keamanan CCTV</h4>
+          <p>Sistem keamanan 24 jam dengan CCTV di seluruh area.</p>
+        </div>
+        <div class="fac-card reveal">
+          <div class="fac-icon yellow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+          </div>
+          <h4>AC & Water Heater</h4>
+          <p>Pengatur suhu ruangan dan pemanas air di setiap kamar.</p>
+        </div>
+        <div class="fac-card reveal">
+          <div class="fac-icon red">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h4>Area Parkir Luas</h4>
+          <p>Tempat parkir gratis untuk tamu dengan kapasitas memadai.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TESTIMONIALS ──────────────────────────────────── -->
+  <section class="testimonials">
+    <div class="testi-inner">
+      <div class="testi-head reveal">
+        <span class="section-label">💬 Ulasan Tamu</span>
+        <h2 class="section-title">Apa Kata Mereka?</h2>
+        <p class="section-sub">Kepuasan tamu adalah prioritas utama kami. Lihat apa yang dikatakan para tamu yang telah menginap di Berlima.</p>
+      </div>
+
+      <div class="testi-grid">
+        <div class="testi-card featured reveal">
+          <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <div class="quote-icon">"</div>
+          <p class="testi-text">Pengalaman menginap yang luar biasa! Kamarnya bersih, nyaman, dan staffnya sangat ramah. Lokasi strategis dekat pusat kota. Pasti balik lagi!</p>
+          <div class="testi-author">
+            <div class="avatar a">AR</div>
+            <div class="author-info">
+              <h5>Andi Rahmawan</h5>
+              <p>Tamu dari Jakarta · 3x Menginap</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal">
+          <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <div class="quote-icon">"</div>
+          <p class="testi-text">Harga terjangkau tapi kualitas premium. Sarapan paginya enak banget, WiFi kencang, dan tempat tidurnya super nyaman. Recommended!</p>
+          <div class="testi-author">
+            <div class="avatar b">SR</div>
+            <div class="author-info">
+              <h5>Siti Rahayu</h5>
+              <p>Tamu dari Bandung · 1x Menginap</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal">
+          <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <div class="quote-icon">"</div>
+          <p class="testi-text">Booking mudah, proses check-in cepat. Kamar Suite-nya spacious banget. Cocok untuk keluarga. Fasilitas lengkap dan terjaga kebersihannya.</p>
+          <div class="testi-author">
+            <div class="avatar c">BP</div>
+            <div class="author-info">
+              <h5>Budi Prasetyo</h5>
+              <p>Tamu dari Surabaya · 2x Menginap</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ───────────────────────────────────────────── -->
+  <section class="cta">
+    <div class="cta-inner reveal">
+      <div class="cta-text">
+        <h2>Siap Menikmati Kenyamanan<br>Berlima Guest House?</h2>
+        <p>Pesan sekarang dan dapatkan penginapan terbaik dengan harga spesial. Tersedia berbagai tipe kamar untuk semua kebutuhan.</p>
+      </div>
+      <div class="cta-actions">
+        <button class="btn-primary">Pesan Sekarang</button>
+        <a href="#" class="btn-outline">Hubungi Kami</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo" style="margin-bottom:0;">
+            <span class="nav-logo-text">Berlima</span>
+            <span class="nav-logo-dot"></span>
+          </a>
+          <p>Hunian nyaman dengan fasilitas lengkap dan lokasi strategis. Solusi terbaik untuk perjalanan bisnis maupun liburan Anda.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="WhatsApp">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Email">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Kamar</h5>
+          <ul>
+            <li><a href="#">Standard Room</a></li>
+            <li><a href="#">Deluxe Room</a></li>
+            <li><a href="#">Suite Room</a></li>
+            <li><a href="#">Family Room</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Informasi</h5>
+          <ul>
+            <li><a href="#">Tentang Kami</a></li>
+            <li><a href="#">Fasilitas</a></li>
+            <li><a href="#">Lokasi</a></li>
+            <li><a href="#">Kontak</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Bantuan</h5>
+          <ul>
+            <li><a href="#">Cara Booking</a></li>
+            <li><a href="#">Kebijakan Refund</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Syarat & Ketentuan</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2025 Berlima Guest House. All rights reserved.</span>
+        <span>Made with ❤️ in Indonesia</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
