@@ -9,9 +9,11 @@
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#rooms">Rooms</a></li>
-      <li><a href="#facilities">Facilities</a></li>
-      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#facilities">About</a></li>
+      <li><a href="#testimonials">Gallery</a></li>
+      <li><a href="#testimonials">Contact</a></li>
     </ul>
 
     <button class="btn-login">Login</button>
   </nav>
+
