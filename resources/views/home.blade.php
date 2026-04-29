@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-    <x-hero />
-    <x-about />
-    <x-features />
+    <x-home.hero />
+    <x-home.about />
+    <x-home.features />
 @endsection
