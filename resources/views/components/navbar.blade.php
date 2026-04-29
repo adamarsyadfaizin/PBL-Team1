@@ -26,7 +26,8 @@
         </li>
 
         <li>
-            <a href="{{ route('home') }}#testimonials" class="nav__link">
+            <a href="{{ route('gallery') }}" 
+               class="nav__link {{ request()->routeIs('gallery') ? 'active' : '' }}">
                Gallery
             </a>
         </li>
