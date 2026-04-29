@@ -176,6 +176,23 @@ body {
     opacity: 1;
 }
 
+.nav__link.active {
+    opacity: 1;
+    color: var(--clr-accent);
+    position: relative;
+}
+
+.nav__link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--clr-accent);
+    border-radius: 2px;
+}
+
 .nav__btn-login {
     background: var(--clr-accent);
     color: #fff;

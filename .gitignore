@@ -24,3 +24,8 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Upload foto kamar — jangan push file fisik ke repo
+# Symlink public/storage tetap terjaga (tidak diignore)
+/storage/app/public/rooms/*
+!/storage/app/public/rooms/.gitkeep

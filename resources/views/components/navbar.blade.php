@@ -14,7 +14,8 @@
         </li>
 
         <li>
-            <a href="{{ route('home') }}#rooms" class="nav__link">
+            <a href="{{ route('rooms.index') }}"
+               class="nav__link {{ request()->routeIs('rooms.*') ? 'active' : '' }}">
                Rooms
             </a>
         </li>

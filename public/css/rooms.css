@@ -1,0 +1,621 @@
+/* ============================================
+   ROOMS.CSS — Halaman Daftar Kamar
+   Berlima Guest House
+   ============================================ */
+
+/* ─── PAGE HERO ────────────────────────────── */
+.rooms-hero {
+    min-height: 52vh;
+    display: flex;
+    align-items: center;
+    padding: calc(var(--space-nav-height, 70px) + 60px) 60px 70px;
+    background: var(--clr-bg, #0e0e0e);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.rooms-hero__glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.rooms-hero__glow--left {
+    top: -120px;
+    left: -150px;
+    background: radial-gradient(circle, rgba(67,97,238,.13) 0%, transparent 70%);
+}
+
+.rooms-hero__glow--right {
+    bottom: -100px;
+    right: -120px;
+    background: radial-gradient(circle, rgba(244,136,42,.09) 0%, transparent 70%);
+}
+
+.rooms-hero__inner {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp .7s ease both;
+}
+
+.rooms-hero__title {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+}
+
+.rooms-hero__accent {
+    background: linear-gradient(90deg, #4361EE, #7b93ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.rooms-hero__sub {
+    color: var(--clr-muted, #888);
+    font-size: .95rem;
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto 40px;
+}
+
+.rooms-hero__stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+
+.rooms-stat {
+    text-align: center;
+}
+
+.rooms-stat__val {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--clr-accent, #4361EE);
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.rooms-stat__label {
+    font-size: .75rem;
+    color: var(--clr-muted, #888);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.rooms-stat-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(255,255,255,.08);
+}
+
+/* ─── FILTER BAR ───────────────────────────── */
+.rooms-filter {
+    background: rgba(14,14,14,.9);
+    border-top: 1px solid rgba(255,255,255,.05);
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    padding: 16px 60px;
+    position: sticky;
+    top: 70px;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+}
+
+.rooms-filter__inner {
+    max-width: var(--space-container, 1200px);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.rooms-filter__label {
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--clr-muted, #888);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,.1);
+    background: transparent;
+    color: var(--clr-muted, #888);
+    font-family: 'Poppins', sans-serif;
+    font-size: .78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+}
+
+.filter-chip:hover {
+    border-color: rgba(67,97,238,.4);
+    color: var(--clr-text, #f0f0f0);
+}
+
+.filter-chip--active {
+    background: var(--clr-accent, #4361EE);
+    border-color: var(--clr-accent, #4361EE);
+    color: #fff;
+}
+
+/* ─── ROOMS PAGE SECTION ───────────────────── */
+.rooms-page {
+    padding: 70px 60px 100px;
+    background: var(--clr-bg, #0e0e0e);
+}
+
+.rooms-page__container {
+    max-width: var(--space-container, 1200px);
+    margin: 0 auto;
+}
+
+.rooms-page__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+/* ─── ROOM CARD COMPONENT ──────────────────── */
+.room-card {
+    background: var(--clr-card, #161616);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform .3s, border-color .3s, box-shadow .3s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.room-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(67,97,238,.35);
+    box-shadow: 0 24px 60px rgba(67,97,238,.1);
+}
+
+.room-card--available {
+    border-color: rgba(34, 197, 94, .15);
+}
+
+/* Image container */
+.room-card__img {
+    width: 100%;
+    height: 210px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.room-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .4s ease;
+}
+
+.room-card:hover .room-card__img img {
+    transform: scale(1.05);
+}
+
+/* Placeholder jika tidak ada gambar */
+.room-card__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a2744 0%, #0f1a36 60%, #1e2a50 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,.15);
+}
+
+/* Status Badge Neon */
+.room-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+}
+
+/* Neon green untuk tersedia */
+.room-badge--available {
+    background: rgba(34, 197, 94, .15);
+    border: 1px solid rgba(34, 197, 94, .5);
+    color: #4ade80;
+    box-shadow: 0 0 12px rgba(34, 197, 94, .2);
+}
+
+.room-badge--available::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 6px #4ade80;
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: .3; }
+}
+
+/* Red untuk terisi */
+.room-badge--occupied {
+    background: rgba(239, 68, 68, .15);
+    border: 1px solid rgba(239, 68, 68, .4);
+    color: #f87171;
+}
+
+/* Amber untuk perbaikan */
+.room-badge--repair {
+    background: rgba(245, 158, 11, .15);
+    border: 1px solid rgba(245, 158, 11, .4);
+    color: #fbbf24;
+}
+
+/* Lantai tag kanan atas */
+.room-floor-tag {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(14,14,14,.75);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,.1);
+    color: rgba(240,240,240,.8);
+    font-size: .68rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 100px;
+}
+
+/* Body */
+.room-card__body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.room-card__type {
+    font-size: .68rem;
+    font-weight: 700;
+    color: var(--clr-accent, #4361EE);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.room-card__name {
+    font-size: .95rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 14px;
+    color: var(--clr-text, #f0f0f0);
+    flex: 1;
+}
+
+/* Fasilitas */
+.room-card__amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.amenity-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(67,97,238,.08);
+    border: 1px solid rgba(67,97,238,.18);
+    color: rgba(240,240,240,.7);
+    font-size: .72rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 100px;
+}
+
+.amenity-chip svg {
+    color: var(--clr-accent, #4361EE);
+    flex-shrink: 0;
+}
+
+.amenity-chip--more {
+    background: rgba(255,255,255,.04);
+    border-color: rgba(255,255,255,.1);
+    color: var(--clr-muted, #888);
+}
+
+/* Footer: harga + tombol */
+.room-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,.07);
+    gap: 12px;
+}
+
+.room-card__price {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--clr-text, #f0f0f0);
+    line-height: 1.2;
+}
+
+.room-card__price small {
+    font-size: .68rem;
+    font-weight: 400;
+    color: var(--clr-muted, #888);
+}
+
+.room-card__price-monthly {
+    font-size: .78rem;
+    font-weight: 500;
+    color: var(--clr-muted, #888);
+    margin-top: 2px;
+}
+
+.room-card__price-monthly small {
+    font-size: .68rem;
+}
+
+/* Tombol Pesan — identik dengan nav__btn-login (biru) */
+.btn-wa-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--clr-accent, #4361EE);
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.btn-wa-card:hover {
+    background: var(--clr-accent-hover, #2f4ed4);
+    transform: translateY(-1px);
+}
+
+.btn-wa-card--disabled {
+    background: rgba(255,255,255,.06);
+    color: var(--clr-muted, #888);
+    border: 1px solid rgba(255,255,255,.08);
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* ─── EMPTY STATE ──────────────────────────── */
+.rooms-empty {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.rooms-empty__icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    background: rgba(67,97,238,.08);
+    border: 1px solid rgba(67,97,238,.2);
+    display: grid;
+    place-items: center;
+    margin: 0 auto 24px;
+    color: var(--clr-muted, #888);
+}
+
+.rooms-empty h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.rooms-empty p {
+    color: var(--clr-muted, #888);
+    font-size: .9rem;
+    margin-bottom: 28px;
+}
+
+/* No-result message */
+.rooms-no-result {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--clr-muted, #888);
+    font-size: .9rem;
+}
+
+/* ─── CTA SECTION ──────────────────────────── */
+.rooms-cta {
+    background: #0b0b0b;
+    padding: 80px 60px;
+}
+
+.rooms-cta__inner {
+    max-width: var(--space-container, 1200px);
+    margin: 0 auto;
+    background: linear-gradient(135deg, #111827 0%, #0d1424 50%, #111520 100%);
+    border: 1px solid rgba(67,97,238,.25);
+    border-radius: 28px;
+    padding: 60px 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.rooms-cta__inner::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(67,97,238,.18) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.rooms-cta__content h2 {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.rooms-cta__content p {
+    color: var(--clr-muted, #888);
+    font-size: .9rem;
+    line-height: 1.65;
+    max-width: 420px;
+}
+
+.rooms-cta__actions {
+    display: flex;
+    gap: 14px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* WhatsApp Hero Button */
+.btn-wa-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--clr-accent, #4361EE);
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-wa-hero:hover {
+    background: var(--clr-accent-hover, #2f4ed4);
+    transform: translateY(-2px);
+}
+
+.btn-outline-rooms {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--clr-text, #f0f0f0);
+    border: 1.5px solid rgba(255,255,255,.15);
+    padding: 13px 24px;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-outline-rooms:hover {
+    border-color: rgba(255,255,255,.3);
+    color: #fff;
+}
+
+/* ─── RESPONSIVE ───────────────────────────── */
+@media (max-width: 1024px) {
+    .rooms-page__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .rooms-cta__inner {
+        flex-direction: column;
+        text-align: center;
+        padding: 48px 40px;
+    }
+
+    .rooms-cta__content p {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .rooms-hero {
+        padding: calc(70px + 40px) 24px 50px;
+    }
+
+    .rooms-filter {
+        padding: 12px 24px;
+        top: 70px;
+    }
+
+    .rooms-page {
+        padding: 50px 24px 70px;
+    }
+
+    .rooms-page__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rooms-hero__stats {
+        gap: 20px;
+    }
+
+    .rooms-cta {
+        padding: 50px 24px;
+    }
+
+    .rooms-cta__inner {
+        padding: 40px 28px;
+        gap: 28px;
+    }
+
+    .rooms-cta__actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-wa-hero,
+    .btn-outline-rooms {
+        justify-content: center;
+    }
+}
