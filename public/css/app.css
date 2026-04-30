@@ -193,6 +193,12 @@ body {
     border-radius: 2px;
 }
 
+.nav__actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .nav__btn-login {
     background: var(--clr-accent);
     color: #fff;
@@ -209,6 +215,27 @@ body {
 .nav__btn-login:hover {
     background: var(--clr-accent-hover);
     transform: translateY(-1px);
+}
+
+.nav__btn-signup {
+    background: #0f0f14; /* hitam agak soft, jangan pure #000 biar gak mati */
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.7);
+    padding: 10px 26px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-primary);
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .25s ease;
+}
+
+/* HOVER */
+.nav__btn-signup:hover {
+    background: #18181f; /* sedikit lebih terang */
+    border-color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 0 12px rgba(255,255,255,0.2);
 }
 
 /* ─── 4. HERO SECTIONS ──────────────────────── */

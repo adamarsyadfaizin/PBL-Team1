@@ -41,5 +41,8 @@
         </li>
     </ul>
 
-    <button class="nav__btn-login">Login</button>
+    <div class="nav__actions">
+    <a href="{{ route('login') }}" class="nav__btn-login">Login</a>
+    <a href="{{ route('signup') }}" class="nav__btn-signup">Sign Up</a>
+    </div>
 </nav>
