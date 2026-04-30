@@ -41,7 +41,7 @@
         </li>
     </ul>
 
-    <div class="nav__actions">
+    <div class="nav__actions" id="navActions">
     <a href="{{ route('login') }}" class="nav__btn-login">Login</a>
     <a href="{{ route('signup') }}" class="nav__btn-signup">Sign Up</a>
     </div>

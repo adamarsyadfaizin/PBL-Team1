@@ -128,3 +128,21 @@ body {
 .auth-footer a:hover {
   text-decoration: underline;
 }
+
+.btn-test-login {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px dashed #888;
+  background: transparent;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.2s;
+}
+
+.btn-test-login:hover {
+  border-color: #8b5cf6;
+  color: #fff;
+}

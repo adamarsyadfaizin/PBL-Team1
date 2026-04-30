@@ -22,3 +22,7 @@ Route::get('/signup', function () {
 Route::get('/login', function () {
     return view('login');
 })->name('login');
+
+Route::get('/profile', function () {
+    return view('profile');
+})->name('profile');

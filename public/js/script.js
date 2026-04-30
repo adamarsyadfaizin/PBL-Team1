@@ -9,3 +9,71 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 reveals.forEach(el => observer.observe(el));
+
+function fakeLogin() {
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userName', 'Adam');
+
+    window.location.href = "/";
+}
+
+function renderNavbar() {
+    const nav = document.getElementById('navActions');
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+    if (!nav) return;
+
+    if (isLoggedIn === 'true') {
+        const name = localStorage.getItem('userName') || 'User';
+
+        nav.innerHTML = `
+          <div class="nav__profile">
+
+            <a href="/profile" class="nav__avatar">
+              ${name.charAt(0)}
+            </a>
+
+            <div class="nav__dropdown">
+              <div class="nav__dropdown-info">
+                <strong>${name}</strong>
+                <span>+62 812-xxxx-xxxx</span>
+              </div>
+
+              <a href="/profile" class="nav__profile-link">
+                Profile
+              </a>
+
+              <button onclick="logout()" class="nav__logout">
+                Logout
+              </button>
+            </div>
+
+          </div>
+        `;
+    } else {
+        nav.innerHTML = `
+            <a href="/login" class="nav__btn-login">Login</a>
+            <a href="/signup" class="nav__btn-signup">Sign Up</a>
+        `;
+    }
+}
+
+function togglePassword() {
+    const input = document.getElementById('passwordField');
+
+    if (input.type === 'password') {
+        input.type = 'text';
+    } else {
+        input.type = 'password';
+    }
+}
+
+function logout() {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userName');
+    window.location.reload();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    renderNavbar();
+});

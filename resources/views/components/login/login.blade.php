@@ -24,6 +24,10 @@
       </div>
 
       <button type="submit" class="btn-submit">Login</button>
+
+      <button type="button" class="btn-test-login" onclick="fakeLogin()">
+        Login Test (cuma muncul pada tahap testing)
+      </button>
     </form>
 
     <p class="auth-footer">
