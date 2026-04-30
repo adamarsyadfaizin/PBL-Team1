@@ -790,3 +790,132 @@ body {
     }
 
     .btn-primary:hover { background: #2f4ed4; transform: translateY(-2px); }
+
+    /* ─── PREVIEW GALLERY (DARK MODE) ───────────────────────── */
+.preview-gallery {
+  padding: 80px 5%;
+  background: linear-gradient(180deg, #0f0f14, #151520);
+  color: white;
+}
+
+/* HEAD */
+.preview-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.preview-head .section-label {
+  color: #8b5cf6; /* ungu */
+}
+
+.preview-head .section-title {
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.preview-head .section-sub {
+  color: #cbd5e1; /* abu terang biar gak terlalu kontras */
+}
+
+/* BUTTON */
+.preview-gallery .btn-outline {
+  border: 1px solid #8b5cf6;
+  color: #8b5cf6;
+  transition: 0.3s;
+}
+
+.preview-gallery .btn-outline:hover {
+  background: #8b5cf6;
+  color: white;
+}
+
+/* GRID */
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* ITEM */
+.preview-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  cursor: pointer;
+  background: #111; /* fallback kalau gambar belum load */
+}
+
+/* IMAGE */
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+/* HOVER ZOOM */
+.preview-item:hover img {
+  transform: scale(1.08);
+}
+
+/* OVERLAY GRADIENT */
+.preview-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  opacity: 0.6; /* beda: langsung keliatan dikit */
+  transition: 0.4s;
+}
+
+.preview-item:hover::after {
+  opacity: 0.9;
+}
+
+/* GLOW BORDER (ini yang bikin keliatan mahal 😎) */
+.preview-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  border: 1px solid transparent;
+  transition: 0.4s;
+}
+
+.preview-item:hover::before {
+  border: 1px solid #8b5cf6;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+}
+
+/* CAPTION */
+.preview-item .caption {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .preview-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .preview-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .preview-grid {
+    grid-template-columns: 1fr;
+  }
+}

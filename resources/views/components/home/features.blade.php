@@ -145,6 +145,47 @@
   </div>
 </section>
 
+{{-- ─── SEKILAS SUASANA ───────────────────────────────────── --}}
+<section class="preview-gallery" id="preview-gallery">
+  <div class="preview-head reveal">
+    <div>
+      <span class="section-label">📸 Sekilas Suasana</span>
+      <h2 class="section-title">Lihat Kenyamanan<br>dari Dekat</h2>
+      <p class="section-sub" style="margin-top:12px">
+        Intip suasana kamar dan fasilitas kami sebelum Anda datang.<br>
+        Nyaman, bersih, dan siap menemani waktu istirahat Anda.
+      </p>
+    </div>
+      <a class="btn-outline">
+        Lihat Galeri Lengkap
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+  </div>
+
+  <div class="preview-grid">
+
+    <div class="preview-item reveal">
+      <img src="/images/gallery/bedroom.png" alt="Kamar Nyaman">
+    </div>
+
+    <div class="preview-item reveal">
+      <img src="/images/gallery/exterior.png" alt="Interior Kamar">
+    </div>
+
+    <div class="preview-item reveal">
+      <img src="/images/gallery/lounge.png" alt="Fasilitas">
+    </div>
+
+    <div class="preview-item reveal">
+      <img src="/images/gallery/area-umum.png" alt="Area Umum">
+    </div>
+
+  </div>
+</section>
+
 {{-- ─── FASILITAS UNGGULAN ─────────────────────────────────── --}}
 <section class="facilities" id="facilities">
   <div class="facilities-inner">
