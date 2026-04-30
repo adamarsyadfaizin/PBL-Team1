@@ -972,15 +972,8 @@ body {
   cursor: pointer;
 }
 
-/* HOVER (sementara) */
-.nav__profile:hover .nav__dropdown {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-/* ACTIVE (klik permanen) */
-.nav__profile.active .nav__dropdown {
+/* aktif */
+.nav__profile.show .nav__dropdown {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;

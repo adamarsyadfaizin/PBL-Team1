@@ -1,3 +1,4 @@
+let hideTimer;
 // Scroll reveal
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver((entries) => {
@@ -27,13 +28,13 @@ function renderNavbar() {
         const name = localStorage.getItem('userName') || 'User';
 
         nav.innerHTML = `
-          <div class="nav__profile">
+          <div class="nav__profile" id="navProfile">
 
             <a href="/profile" class="nav__avatar">
               ${name.charAt(0)}
             </a>
 
-            <div class="nav__dropdown">
+            <div class="nav__dropdown" id="profileDropdown">
               <div class="nav__dropdown-info">
                 <strong>${name}</strong>
                 <span>+62 812-xxxx-xxxx</span>
@@ -74,6 +75,28 @@ function logout() {
     window.location.reload();
 }
 
+document.addEventListener('mouseover', function (e) {
+    const profile = document.getElementById('navProfile');
+    if (!profile) return;
+
+    if (profile.contains(e.target)) {
+        clearTimeout(hideTimer);
+        profile.classList.add('show');
+    }
+});
+
+document.addEventListener('mouseout', function (e) {
+    const profile = document.getElementById('navProfile');
+    if (!profile) return;
+
+    if (!profile.contains(e.relatedTarget)) {
+        hideTimer = setTimeout(() => {
+            profile.classList.remove('show');
+        }, 10000); // ⏱ 10 detik
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function () {
     renderNavbar();
 });
+
