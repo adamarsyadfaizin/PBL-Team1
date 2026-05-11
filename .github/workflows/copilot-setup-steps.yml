@@ -1,0 +1,68 @@
+name: "Copilot Setup Steps"
+
+# Automatically run the setup steps when they are changed to allow for easy validation, and
+# allow manual testing through the repository's "Actions" tab
+on:
+    workflow_dispatch:
+    push:
+        paths:
+            - .github/workflows/copilot-setup-steps.yml
+    pull_request:
+        paths:
+            - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+    # The job MUST be called `copilot-setup-steps` or it will not be picked up by Copilot.
+    copilot-setup-steps:
+        runs-on: ubuntu-latest
+
+        # Set the permissions to the lowest permissions possible needed for your steps.
+        # Copilot will be given its own token for its operations.
+        permissions:
+            # Required to clone the repository
+            contents: read
+
+        # You can define any steps you want, and they will run before the agent starts.
+        # If you do not check out your code, Copilot will do this for you.
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v5
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.3"
+                  extensions: curl,mbstring,sqlite3,pdo_sqlite
+                  tools: composer:v2
+
+            - name: Cache Composer dependencies
+              uses: actions/cache@v4
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-composer-
+
+            - name: Install PHP dependencies
+              run: composer install --no-interaction --prefer-dist --no-scripts
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+                  cache: "npm"
+
+            - name: Install JavaScript dependencies
+              run: npm ci
+
+            - name: Setup Laravel environment
+              run: |
+                  cp .env.example .env || true
+                  php artisan key:generate --no-interaction || true
+
+            - name: Run migrations on in-memory SQLite
+              run: |
+                  php artisan migrate --database=sqlite --force --no-interaction || true
+
+            - name: Build frontend assets
+              run: npm run build

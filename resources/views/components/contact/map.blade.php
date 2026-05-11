@@ -3,7 +3,6 @@
             </a>
           </div>
         </div>
-      </div>
 
       <!-- MAP -->
       <div class="map-side reveal">
@@ -96,4 +95,3 @@
       </div>
     </div>
   </div>
-

@@ -3,18 +3,21 @@
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
-    return view('home');
-});->name('home');
+    return view('pages.home');
+})->name('home');
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
 
-Route::get('/contact', function () {
-    return view('pages.contact');
-})->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])
+    ->name('contact');
+
+Route::post('/contact', [ContactController::class, 'store'])
+    ->name('contact.store');
 
 Route::get('/gallery', function () {
     return view('pages.gallery');

@@ -11,6 +11,6 @@
 @section('content')
     <x-contact.hero />
     <x-contact.info />
-    <x-contact.form />
+    <x-contact.form :rooms="$rooms" />
     <x-contact.map />
 @endsection
