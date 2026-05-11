@@ -20,6 +20,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'phone',
+        'ktp',
     ];
 
     /** @var list<string> */
