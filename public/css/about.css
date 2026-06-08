@@ -1,0 +1,126 @@
+.about-hero {
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 5% 40px;
+}
+
+.about-title {
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-weight: 700;
+}
+
+.about-title span {
+    color: var(--clr-accent);
+}
+
+.container {
+    padding: 0 5%;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin: 40px 0;
+}
+
+.stat-card {
+    background: var(--clr-card);
+    border: 1px solid var(--clr-border);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--clr-accent);
+}
+
+.stat-label {
+    color: var(--clr-muted);
+    font-size: 0.75rem;
+}
+
+.visi-misi-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin: 40px 0;
+}
+
+@media (min-width: 768px) {
+    .visi-misi-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.vm-card {
+    background: var(--clr-card);
+    border: 1px solid var(--clr-border);
+    border-radius: 20px;
+    padding: 24px;
+}
+
+.fac-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin: 30px 0;
+}
+
+.fac-card {
+    background: var(--clr-card);
+    border: 1px solid var(--clr-border);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+}
+
+.fac-icon {
+    width: 52px;
+    height: 52px;
+    background: rgba(67, 97, 238, 0.12);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    color: var(--clr-accent);
+}
+
+.contact-section {
+    background: var(--clr-card);
+    border: 1px solid var(--clr-border);
+    border-radius: 20px;
+    padding: 30px 20px;
+    margin: 40px 0;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    text-align: center;
+}
+
+@media (min-width: 640px) {
+    .contact-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.5s;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
