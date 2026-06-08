@@ -1,30 +1,51 @@
- <section class="how">
+@props([
+    'settings',
+    'recommendedRoom' => null,
+])
+
+@php
+    $roomDetailUrl = $recommendedRoom
+        ? route('rooms.show', ['room' => $recommendedRoom->nomor_kamar])
+        : route('rooms.index');
+    $averageRating = $recommendedRoom ? round((float) ($recommendedRoom->reviews_avg_rating ?? 0), 1) : 0.0;
+    $reviewsCount = $recommendedRoom ? (int) ($recommendedRoom->reviews_count ?? 0) : 0;
+    $dailyPrice = $recommendedRoom
+        ? 'Rp ' . number_format((float) $recommendedRoom->harga_harian, 0, ',', '.')
+        : null;
+    $roomType = $recommendedRoom?->tipe_kamar ?: 'Kamar Berlima Guest House';
+    $roomMeta = collect([
+        $recommendedRoom?->lantai ? 'Lantai ' . $recommendedRoom->lantai : null,
+        $recommendedRoom?->luas_m2 ? number_format((float) $recommendedRoom->luas_m2, 0, ',', '.') . ' m2' : null,
+    ])->filter()->implode(' · ');
+@endphp
+
+<section class="how">
     <div class="how-inner">
       <div>
-        <span class="section-label reveal">✦ Cara Pemesanan</span>
-        <h2 class="section-title reveal">Booking Kamar<br>Semudah 3 Langkah</h2>
-        <p class="section-sub reveal">Proses reservasi kami dirancang simpel dan cepat — dari pilih kamar hingga check-in, semua bisa dilakukan dalam hitungan menit.</p>
+        <span class="section-label reveal">✦ {{ $settings->how_label }}</span>
+        <h2 class="section-title reveal">{!! nl2br(e($settings->how_title)) !!}</h2>
+        <p class="section-sub reveal">{!! nl2br(e($settings->how_description)) !!}</p>
 
         <div class="how-steps">
           <div class="step reveal">
             <div class="step-num">01</div>
             <div class="step-body">
-              <h4>Pilih Kamar yang Kamu Suka</h4>
-              <p>Jelajahi koleksi kamar kami — dari Standar hingga Suite. Filter berdasarkan harga, kapasitas, atau fasilitas.</p>
+              <h4>{{ $settings->how_step_1_title }}</h4>
+              <p>{{ $settings->how_step_1_description }}</p>
             </div>
           </div>
           <div class="step reveal">
             <div class="step-num orange">02</div>
             <div class="step-body">
-              <h4>Tentukan Tanggal & Tamu</h4>
-              <p>Pilih tanggal check-in & check-out, jumlah tamu, dan kebutuhan tambahan seperti sarapan atau late checkout.</p>
+              <h4>{{ $settings->how_step_2_title }}</h4>
+              <p>{{ $settings->how_step_2_description }}</p>
             </div>
           </div>
           <div class="step reveal">
             <div class="step-num green">03</div>
             <div class="step-body">
-              <h4>Konfirmasi & Bayar</h4>
-              <p>Bayar dengan berbagai metode pembayaran. Konfirmasi booking langsung dikirim ke email kamu.</p>
+              <h4>{{ $settings->how_step_3_title }}</h4>
+              <p>{{ $settings->how_step_3_description }}</p>
             </div>
           </div>
         </div>
@@ -33,17 +54,52 @@
       <div class="how-visual reveal">
         <div class="how-card-big">
           <div class="how-card-img">
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
-              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21 15 16 10 5 21"/>
-            </svg>
+            @if ($recommendedRoom?->foto_utama)
+              <img
+                src="{{ asset('storage/' . $recommendedRoom->foto_utama) }}"
+                alt="Foto Kamar {{ $recommendedRoom->nomor_kamar }}"
+                loading="lazy"
+                onerror="this.hidden=true;this.nextElementSibling.hidden=false;"
+              >
+            @endif
+
+            <div class="how-card-placeholder" @if ($recommendedRoom?->foto_utama) hidden @endif>
+              <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+              <span>Foto kamar belum tersedia</span>
+            </div>
           </div>
           <div class="how-card-body">
-            <h4>Deluxe King Room</h4>
-            <p>Kamar Lantai 3 · 2 Tamu</p>
+            @if ($recommendedRoom)
+              <h4>Kamar {{ $recommendedRoom->nomor_kamar }}</h4>
+              <p>{{ $roomType }}{{ $roomMeta ? ' · ' . $roomMeta : '' }}</p>
+
+              <div class="how-room-rating">
+                @if ($reviewsCount > 0)
+                  <div class="stars-row" aria-hidden="true">
+                    @for ($star = 1; $star <= 5; $star++)
+                      <span class="{{ $star <= (int) round($averageRating) ? 'is-filled' : '' }}">&#9733;</span>
+                    @endfor
+                  </div>
+                  <strong>{{ number_format($averageRating, 1, ',', '.') }}</strong>
+                  <small>{{ $reviewsCount }} {{ $reviewsCount === 1 ? 'ulasan' : 'ulasan' }}</small>
+                @else
+                  <span class="review-empty">Belum ada ulasan</span>
+                @endif
+              </div>
+            @else
+              <h4>Belum ada kamar rekomendasi</h4>
+              <p>Data kamar belum tersedia dari database.</p>
+            @endif
+
             <div class="how-card-footer">
-              <div class="how-price">Rp 450k <span>/ malam</span></div>
-              <button class="btn-sm">Pesan</button>
+              <div class="how-price">
+                {{ $dailyPrice ?? '-' }} <span>/ malam</span>
+              </div>
+              <a class="btn-sm" href="{{ $roomDetailUrl }}">{{ $recommendedRoom ? 'Lihat Detail' : 'Lihat Kamar' }}</a>
             </div>
           </div>
         </div>
@@ -54,16 +110,23 @@
           </div>
           <div>
             <h5>Rekomendasi</h5>
-            <p>Terbaik</p>
+            <p>Berdasarkan ulasan aktual</p>
           </div>
         </div>
 
         <div class="badge-float bottom-left">
-          <div class="stars-row">
-            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-          </div>
-          <h5 style="margin-top:6px;font-size:.8rem;">Tamu Puas</h5>
-          <p style="font-size:.7rem;color:var(--muted);">28+ ulasan positif</p>
+          @if ($recommendedRoom && $reviewsCount > 0)
+            <div class="stars-row" aria-hidden="true">
+              @for ($star = 1; $star <= 5; $star++)
+                <span class="{{ $star <= (int) round($averageRating) ? 'is-filled' : '' }}">&#9733;</span>
+              @endfor
+            </div>
+            <h5>{{ number_format($averageRating, 1, ',', '.') }} rating rata-rata</h5>
+            <p>{{ $reviewsCount }} ulasan aktual</p>
+          @else
+            <h5>Belum ada ulasan</h5>
+            <p>Rating akan muncul setelah user memberi ulasan.</p>
+          @endif
         </div>
       </div>
     </div>
