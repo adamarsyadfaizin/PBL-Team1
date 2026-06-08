@@ -102,7 +102,7 @@
   <div class="preview-grid">
     @foreach ($guestProfile->galleryItems(4) as $item)
       <a href="{{ route('about') }}#about-gallery" class="preview-item reveal">
-        <img src="{{ \App\Models\GuestProfile::imageUrl($item['image'] ?? null) }}" alt="{{ $item['title'] ?? 'Gallery Berlima Guest House' }}">
+        <img src="{{ !empty($item['image']) ? asset('storage/' . $item['image']) : 'https://placehold.co/600x400/E2E8F0/1E293B?text=Gallery' }}" alt="{{ $item['title'] ?? 'Gallery Berlima Guest House' }}">
         <span class="caption">{{ $item['title'] ?? 'Berlima Guest House' }}</span>
       </a>
     @endforeach
