@@ -27,12 +27,6 @@
             </a>
         </li>
 
-        <li>
-            <a href="{{ route('gallery') }}" 
-               class="nav__link {{ request()->routeIs('gallery') ? 'active' : '' }}">
-               Gallery
-            </a>
-        </li>
 
         <li>
             <a href="{{ route('contact') }}" 
