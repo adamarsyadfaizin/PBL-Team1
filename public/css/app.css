@@ -738,6 +738,110 @@ body {
     font-size: .8rem;
 }
 
+.footer__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.footer__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    font-size: .85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .2s;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--clr-text);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer__action:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.footer__action--primary {
+    background: var(--clr-accent);
+    color: #fff;
+    border-color: transparent;
+}
+
+.footer__action--primary:hover {
+    background: var(--clr-accent-hover);
+    border-color: transparent;
+}
+
+.footer__steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.footer__steps li {
+    font-size: .85rem;
+    color: rgba(240,240,240,.65);
+    line-height: 1.5;
+    position: relative;
+    padding-left: 20px;
+}
+
+.footer__steps li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--clr-accent);
+}
+
+.footer__contact {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--clr-border);
+}
+
+.footer__contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--clr-text);
+    transition: transform .2s;
+}
+
+.footer__contact-item:hover {
+    transform: translateY(-2px);
+}
+
+.footer__contact-item span {
+    font-size: .75rem;
+    color: var(--clr-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer__contact-item strong {
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--clr-text);
+    transition: color .2s;
+}
+
+a.footer__contact-item:hover strong {
+    color: var(--clr-accent);
+}
+
 /* ─── 11. CONTACT PAGE COMPONENTS ────────────── */
 /* Contact Info Section */
 .contact-info {
@@ -890,6 +994,10 @@ body {
     .footer__top {
         grid-template-columns: repeat(2, 1fr);
     }
+    
+    .footer__contact {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 768px) {
@@ -899,8 +1007,16 @@ body {
     
     .rooms__grid,
     .facilities__grid,
-    .testimonials__grid {
+    .testimonials__grid,
+    .footer__top,
+    .footer__contact {
         grid-template-columns: 1fr;
+    }
+    
+    .footer__bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
     }
     
     .cta__container {
