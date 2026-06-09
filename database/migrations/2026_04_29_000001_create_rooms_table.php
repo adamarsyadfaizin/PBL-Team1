@@ -10,6 +10,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasTable('rooms')) {
+            return;
+        }
+
         Schema::create('rooms', function (Blueprint $table): void {
             // Primary Key — UUID
             $table->uuid('id')->primary();
@@ -19,6 +23,7 @@ return new class extends Migration
             $table->smallInteger('lantai');
             $table->decimal('luas_m2', 8, 2)->nullable();
             $table->text('deskripsi')->nullable();
+            $table->string('tipe_kamar')->nullable();
 
             // Fasilitas disimpan sebagai JSON array
             $table->jsonb('fasilitas')->nullable();
@@ -31,6 +36,8 @@ return new class extends Migration
             // Status & visibilitas
             $table->enum('status', ['tersedia', 'terisi', 'perbaikan'])->default('tersedia');
             $table->string('foto_utama')->nullable();
+            $table->json('gallery_images')->nullable();
+            $table->string('video_path')->nullable();
             $table->boolean('is_published')->default(true);
 
             $table->timestamps();
