@@ -1,84 +1,107 @@
+@php
+    $guestProfile = \App\Models\GuestProfile::active();
+    $contactItems = collect($guestProfile->contact_items ?: []);
+    $whatsappItem = $contactItems->first(
+        fn (array $item): bool => str_contains(strtolower((string) ($item['label'] ?? '')), 'whatsapp')
+    );
+    $emailItem = $contactItems->first(
+        fn (array $item): bool => str_contains(strtolower((string) ($item['label'] ?? '')), 'email')
+    );
+    $hoursItem = $contactItems->first(
+        fn (array $item): bool => str_contains(strtolower((string) ($item['label'] ?? '')), 'operasional')
+    );
+    $checkItem = $contactItems->first(
+        fn (array $item): bool => str_contains(strtolower((string) ($item['label'] ?? '')), 'check-in')
+    );
+    $whatsappUrl = $guestProfile->whatsappUrl('Halo Berlima Guest House, saya ingin bertanya tentang ketersediaan kamar.');
+@endphp
+
 <footer class="footer">
     <div class="footer__inner">
-
         <div class="footer__top">
-
-            <!-- BRAND -->
             <div class="footer__brand">
-                <a href="/" class="footer__brand-logo">
-                    <span class="footer__brand-name">Berlima</span>
-                    <span class="footer__brand-dot"></span>
+                <a href="{{ route('home') }}" class="footer__brand-logo" aria-label="Berlima Guest House">
+                    <span class="footer__brand-name">Berlima Guest House</span>
+                    <span class="footer__brand-dot" aria-hidden="true"></span>
                 </a>
 
                 <p class="footer__desc">
-                    Hunian nyaman dengan fasilitas lengkap dan lokasi strategis. 
-                    Solusi terbaik untuk perjalanan bisnis maupun liburan Anda.
+                    Cari kamar, cek detail harga dan ketersediaan, lalu kirim reservasi untuk dikonfirmasi admin.
                 </p>
 
-                <div class="footer__socials">
-                  <a href="https://instagram.com" target="_blank" class="footer__social-btn" aria-label="Instagram">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="2" y="2" width="20" height="20" rx="5"/>
-        <circle cx="12" cy="12" r="4"/>
-        <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
-    </svg>
-</a>
-
-<a href="https://wa.me/6281234567890" target="_blank" class="footer__social-btn" aria-label="WhatsApp">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-    </svg>
-</a>
-
-<a href="mailto:info@berlimaguesthouse.com" class="footer__social-btn" aria-label="Email">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-        <polyline points="22,6 12,13 2,6"/>
-    </svg>
-</a>
+                <div class="footer__actions">
+                    <a href="{{ route('rooms.index') }}" class="footer__action footer__action--primary">Cari kamar</a>
+                    <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener" class="footer__action">WhatsApp admin</a>
                 </div>
             </div>
 
-            <!-- KAMAR -->
             <div class="footer__col">
-                <h5 class="footer__col-title">Kamar</h5>
+                <h5 class="footer__col-title">Reservasi</h5>
                 <ul class="footer__col-list">
-                    <li><a href="#" class="footer__col-link">Standard Room</a></li>
-                    <li><a href="#" class="footer__col-link">Deluxe Room</a></li>
-                    <li><a href="#" class="footer__col-link">Suite Room</a></li>
-                    <li><a href="#" class="footer__col-link">Family Room</a></li>
+                    <li><a href="{{ route('rooms.index') }}" class="footer__col-link">Daftar kamar</a></li>
+                    <li><a href="{{ route('rooms.index', ['status' => 'tersedia']) }}" class="footer__col-link">Kamar tersedia</a></li>
+                    <li><a href="{{ route('contact') }}#guest-request-form" class="footer__col-link">Tanya kebutuhan menginap</a></li>
+                    @auth
+                        <li><a href="{{ route('profile') }}" class="footer__col-link">Profil penyewa</a></li>
+                    @else
+                        <li><a href="{{ route('login') }}" class="footer__col-link">Login penyewa</a></li>
+                    @endauth
                 </ul>
             </div>
 
-            <!-- INFORMASI -->
             <div class="footer__col">
                 <h5 class="footer__col-title">Informasi</h5>
                 <ul class="footer__col-list">
-                    <li><a href="#" class="footer__col-link">Tentang Kami</a></li>
-                    <li><a href="#" class="footer__col-link">Fasilitas</a></li>
-                    <li><a href="#" class="footer__col-link">Lokasi</a></li>
-                    <li><a href="#" class="footer__col-link">Kontak</a></li>
+                    <li><a href="{{ route('about') }}" class="footer__col-link">Tentang Berlima</a></li>
+                    <li><a href="{{ route('about') }}#about-gallery" class="footer__col-link">Galeri guest house</a></li>
+                    <li><a href="{{ route('contact') }}" class="footer__col-link">Kontak dan FAQ</a></li>
+                    <li><a href="{{ route('contact') }}#map-title" class="footer__col-link">Lokasi</a></li>
                 </ul>
             </div>
 
-            <!-- BANTUAN -->
-            <div class="footer__col">
-                <h5 class="footer__col-title">Bantuan</h5>
-                <ul class="footer__col-list">
-                    <li><a href="#" class="footer__col-link">Cara Booking</a></li>
-                    <li><a href="#" class="footer__col-link">Kebijakan Refund</a></li>
-                    <li><a href="#" class="footer__col-link">FAQ</a></li>
-                    <li><a href="#" class="footer__col-link">Syarat & Ketentuan</a></li>
+            <div class="footer__col footer__col--process">
+                <h5 class="footer__col-title">Alur sistem</h5>
+                <ul class="footer__steps">
+                    <li>Detail kamar menampilkan foto, fasilitas, harga, status, dan ulasan.</li>
+                    <li>Form booking menghitung durasi, total tagihan, dan meminta bukti transfer.</li>
+                    <li>Admin mengecek data reservasi lalu menghubungi penyewa melalui WhatsApp.</li>
                 </ul>
             </div>
-
         </div>
 
-        <!-- BOTTOM -->
+        <div class="footer__contact">
+            @if ($whatsappItem)
+                <a href="{{ $whatsappItem['url'] ?? $whatsappUrl }}" target="_blank" rel="noopener" class="footer__contact-item">
+                    <span>{{ $whatsappItem['label'] ?? 'WhatsApp Admin' }}</span>
+                    <strong>{{ $whatsappItem['value'] ?? 'Hubungi admin' }}</strong>
+                </a>
+            @endif
+
+            @if ($emailItem)
+                <a href="{{ $emailItem['url'] ?? 'mailto:' . ($emailItem['value'] ?? '') }}" class="footer__contact-item">
+                    <span>{{ $emailItem['label'] ?? 'Email' }}</span>
+                    <strong>{{ $emailItem['value'] ?? 'info@berlimaguesthouse.com' }}</strong>
+                </a>
+            @endif
+
+            @if ($hoursItem)
+                <div class="footer__contact-item">
+                    <span>{{ $hoursItem['label'] ?? 'Jam Operasional' }}</span>
+                    <strong>{{ $hoursItem['value'] }}</strong>
+                </div>
+            @endif
+
+            @if ($checkItem)
+                <div class="footer__contact-item">
+                    <span>{{ $checkItem['label'] ?? 'Check-in / Check-out' }}</span>
+                    <strong>{{ $checkItem['value'] }}</strong>
+                </div>
+            @endif
+        </div>
+
         <div class="footer__bottom">
-            <span>© 2025 Berlima Guest House. All rights reserved.</span>
-            <span>Made with ❤️ in Indonesia</span>
+            <span>&copy; {{ now()->year }} Berlima Guest House</span>
+            <span>Reservasi dicatat sistem, konfirmasi tetap melalui admin.</span>
         </div>
-
     </div>
 </footer>
