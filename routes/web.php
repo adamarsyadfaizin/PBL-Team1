@@ -21,9 +21,7 @@ Route::get('/contact', function () {
     return view('pages.contact');
 })->name('contact');
 
-Route::get('/gallery', function () {
-    return view('pages.gallery');
-})->name('gallery');
+
 
 Route::get('/signup', function () {
     return view('pages.signup');
