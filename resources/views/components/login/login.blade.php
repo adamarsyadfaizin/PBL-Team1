@@ -2,37 +2,33 @@
 
   <!-- BACK BUTTON -->
   <a href="{{ route('home') }}" class="auth-back">
-    ← Kembali ke Home
+    ← Kembali ke Beranda
   </a>
 
   <div class="auth-card">
 
     <h2 class="auth-title">Masuk Akun</h2>
-    <p class="auth-sub">Silakan login untuk melanjutkan</p>
+    <p class="auth-sub">Silakan masuk untuk melanjutkan</p>
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login.store') }}">
       @csrf
 
       <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" placeholder="contoh@email.com" required>
+        <label>Post-el</label>
+        <input type="email" name="email" placeholder="contoh@postel.com" required>
       </div>
 
       <div class="form-group">
-        <label>Password</label>
-        <input type="password" name="password" placeholder="Masukkan password" required>
+        <label>Kata Sandi</label>
+        <input type="password" name="password" placeholder="Masukkan kata sandi" required>
       </div>
 
-      <button type="submit" class="btn-submit">Login</button>
-
-      <button type="button" class="btn-test-login" onclick="fakeLogin()">
-        Login Test (cuma muncul pada tahap testing)
-      </button>
+      <button type="submit" class="btn-submit">Masuk</button>
     </form>
 
     <p class="auth-footer">
       Belum punya akun?
-      <a href="{{ route('signup') }}">Sign Up</a>
+      <a href="{{ route('signup') }}">Daftar</a>
     </p>
 
   </div>
