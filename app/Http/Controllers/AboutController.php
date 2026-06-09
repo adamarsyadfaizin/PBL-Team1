@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\GuestProfile;
+use Illuminate\View\View;
 
 class AboutController extends Controller
 {
-    public function index()
+    public function index(): View
     {
-        return view('pages.about');
+        return view('pages.about', [
+            'guestProfile' => GuestProfile::active(),
+        ]);
     }
 }
