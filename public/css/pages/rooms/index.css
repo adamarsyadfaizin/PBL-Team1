@@ -1,0 +1,529 @@
+/* Rooms index page */
+
+.rooms-hero {
+    min-height: 52vh;
+    display: flex;
+    align-items: center;
+    padding: calc(var(--space-nav-height, 70px) + 60px) 60px 70px;
+    background: var(--clr-bg, #0e0e0e);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.rooms-hero__glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.rooms-hero__glow--left {
+    top: -120px;
+    left: -150px;
+    background: radial-gradient(circle, rgba(67,97,238,.13) 0%, transparent 70%);
+}
+
+.rooms-hero__glow--right {
+    bottom: -100px;
+    right: -120px;
+    background: radial-gradient(circle, rgba(244,136,42,.09) 0%, transparent 70%);
+}
+
+.rooms-hero__inner {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp .7s ease both;
+}
+
+.rooms-hero__title {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 18px;
+}
+
+.rooms-hero__accent {
+    background: linear-gradient(90deg, #4361EE, #7b93ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.rooms-hero__sub {
+    color: var(--clr-muted, #888);
+    font-size: .95rem;
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto 40px;
+}
+
+.rooms-hero__stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+
+.rooms-stat {
+    text-align: center;
+}
+
+.rooms-stat__val {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--clr-accent, #4361EE);
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.rooms-stat__label {
+    font-size: .75rem;
+    color: var(--clr-muted, #888);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.rooms-stat-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(255,255,255,.08);
+}
+
+.rooms-filter {
+    background: rgba(14,14,14,.9);
+    border-top: 1px solid rgba(255,255,255,.05);
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    padding: 16px 60px;
+    position: sticky;
+    top: 70px;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+}
+
+.rooms-filter__inner {
+    max-width: var(--space-container, 1200px);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.rooms-search {
+    flex: 1 1 320px;
+    min-width: min(100%, 280px);
+}
+
+.rooms-search__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+.rooms-search__control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 10px;
+    background: rgba(255,255,255,.045);
+    color: var(--clr-muted, #888);
+}
+
+.rooms-search__control:focus-within {
+    border-color: rgba(67,97,238,.55);
+}
+
+.rooms-search__control input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--clr-text, #f0f0f0);
+    font-family: 'Poppins', sans-serif;
+    font-size: .86rem;
+}
+
+.rooms-search__control input::placeholder {
+    color: var(--clr-muted, #888);
+}
+
+.rooms-search__clear {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    color: var(--clr-text, #f0f0f0);
+    text-decoration: none;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.rooms-filter__chips {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.rooms-filter__label {
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--clr-muted, #888);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,.1);
+    background: transparent;
+    color: var(--clr-muted, #888);
+    font-family: 'Poppins', sans-serif;
+    font-size: .78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.filter-chip:hover {
+    border-color: rgba(67,97,238,.4);
+    color: var(--clr-text, #f0f0f0);
+}
+
+.filter-chip--active {
+    background: var(--clr-accent, #4361EE);
+    border-color: var(--clr-accent, #4361EE);
+    color: #fff;
+}
+
+.rooms-page {
+    padding: 70px 60px 100px;
+    background: var(--clr-bg, #0e0e0e);
+}
+
+.rooms-recent {
+    padding: 42px 60px 0;
+    background: var(--clr-bg, #0e0e0e);
+}
+
+.rooms-recent__inner {
+    max-width: var(--space-container, 1200px);
+    margin: 0 auto;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    padding-bottom: 34px;
+}
+
+.rooms-recent__head {
+    margin-bottom: 18px;
+}
+
+.rooms-recent__head h2 {
+    font-size: 1.35rem;
+    margin: 6px 0 0;
+}
+
+.rooms-recent__grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.rooms-recent-card {
+    display: grid;
+    gap: 10px;
+    color: var(--clr-text, #f0f0f0);
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    background: rgba(255,255,255,.035);
+    padding: 10px;
+    min-width: 0;
+}
+
+.rooms-recent-card:hover {
+    border-color: rgba(67,97,238,.45);
+}
+
+.rooms-recent-card__image {
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255,255,255,.06);
+    display: grid;
+    place-items: center;
+    color: var(--clr-muted, #888);
+    font-size: .78rem;
+}
+
+.rooms-recent-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rooms-recent-card span,
+.rooms-recent-card small {
+    color: var(--clr-muted, #888);
+    font-size: .72rem;
+}
+
+.rooms-recent-card strong {
+    display: block;
+    margin: 3px 0;
+    font-size: .86rem;
+    line-height: 1.35;
+}
+
+.rooms-page__container {
+    max-width: var(--space-container, 1200px);
+    margin: 0 auto;
+}
+
+.rooms-page__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.rooms-empty {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.rooms-empty__icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    background: rgba(67,97,238,.08);
+    border: 1px solid rgba(67,97,238,.2);
+    display: grid;
+    place-items: center;
+    margin: 0 auto 24px;
+    color: var(--clr-muted, #888);
+}
+
+.rooms-empty h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.rooms-empty p,
+.rooms-no-result {
+    color: var(--clr-muted, #888);
+    font-size: .9rem;
+}
+
+.rooms-empty p {
+    margin-bottom: 28px;
+}
+
+.rooms-no-result {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.rooms-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 34px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.rooms-pagination__summary {
+    color: var(--clr-muted, #888);
+    font-size: .84rem;
+}
+
+.rooms-pagination__nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.rooms-page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 8px;
+    background: rgba(255,255,255,.04);
+    color: var(--clr-text, #f0f0f0);
+    font-size: .82rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.rooms-page-link:hover {
+    border-color: rgba(67,97,238,.45);
+}
+
+.rooms-page-link.is-active {
+    background: var(--clr-accent, #4361EE);
+    border-color: var(--clr-accent, #4361EE);
+    color: #fff;
+}
+
+.rooms-page-link.is-disabled {
+    cursor: not-allowed;
+    opacity: .45;
+}
+
+.rooms-cta {
+    background: #0b0b0b;
+    padding: 80px 60px;
+}
+
+.rooms-cta__inner {
+    max-width: var(--space-container, 1200px);
+    margin: 0 auto;
+    background: linear-gradient(135deg, #111827 0%, #0d1424 50%, #111520 100%);
+    border: 1px solid rgba(67,97,238,.25);
+    border-radius: 28px;
+    padding: 60px 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.rooms-cta__inner::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(67,97,238,.18) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.rooms-cta__content h2 {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.rooms-cta__content p {
+    color: var(--clr-muted, #888);
+    font-size: .9rem;
+    line-height: 1.65;
+    max-width: 420px;
+}
+
+.rooms-cta__actions {
+    display: flex;
+    gap: 14px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 1024px) {
+    .rooms-page__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .rooms-cta__inner {
+        flex-direction: column;
+        text-align: center;
+        padding: 48px 40px;
+    }
+
+    .rooms-cta__content p {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .rooms-hero {
+        padding: calc(70px + 40px) 24px 50px;
+    }
+
+    .rooms-filter {
+        padding: 12px 24px;
+        top: 70px;
+    }
+
+    .rooms-page {
+        padding: 50px 24px 70px;
+    }
+
+    .rooms-recent {
+        padding: 32px 24px 0;
+    }
+
+    .rooms-recent__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rooms-page__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rooms-filter__inner,
+    .rooms-filter__chips,
+    .rooms-pagination {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .rooms-search {
+        flex-basis: auto;
+        width: 100%;
+    }
+
+    .rooms-pagination__nav {
+        justify-content: center;
+    }
+
+    .rooms-hero__stats {
+        gap: 20px;
+    }
+
+    .rooms-cta {
+        padding: 50px 24px;
+    }
+
+    .rooms-cta__inner {
+        padding: 40px 28px;
+        gap: 28px;
+    }
+
+    .rooms-cta__actions {
+        flex-direction: column;
+        width: 100%;
+    }
+}
