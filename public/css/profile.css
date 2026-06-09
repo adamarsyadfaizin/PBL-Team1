@@ -3,6 +3,9 @@
   padding: 80px 5%;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 
 /* CARD */
@@ -14,6 +17,10 @@
   border-radius: 18px;
   border: 1px solid var(--border);
   box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+.profile-card--wide {
+  max-width: 760px;
 }
 
 /* TITLE */
@@ -114,4 +121,112 @@
 .profile-back:hover {
   color: #fff;
   transform: translateX(-3px);
+}
+
+.booking-history-empty {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  background: rgba(255,255,255,.03);
+}
+
+.booking-history-empty h3,
+.booking-history-item h3 {
+  margin: 0 0 8px;
+}
+
+.booking-history-empty p {
+  color: var(--muted);
+  font-size: .9rem;
+  margin-bottom: 16px;
+}
+
+.booking-history-empty a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.booking-history-list {
+  display: grid;
+  gap: 14px;
+}
+
+.booking-history-item {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  background: rgba(255,255,255,.03);
+}
+
+.booking-history-item__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.booking-history-item__head span {
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.booking-status {
+  align-self: flex-start;
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  font-size: .74rem;
+  white-space: nowrap;
+}
+
+.booking-status--menunggu-konfirmasi {
+  background: rgba(245, 158, 11, .18);
+  color: #fbbf24;
+}
+
+.booking-status--active-stay {
+  background: rgba(34, 197, 94, .18);
+  color: #86efac;
+}
+
+.booking-status--dibatalkan {
+  background: rgba(239, 68, 68, .18);
+  color: #fca5a5;
+}
+
+.booking-history-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.booking-history-meta dt {
+  color: var(--muted);
+  font-size: .72rem;
+}
+
+.booking-history-meta dd {
+  margin: 3px 0 0;
+  font-size: .86rem;
+}
+
+.booking-history-note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: .86rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 760px) {
+  .booking-history-item__head,
+  .booking-history-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-history-item__head {
+    flex-direction: column;
+  }
 }

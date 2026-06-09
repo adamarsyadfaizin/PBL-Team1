@@ -93,6 +93,14 @@ body {
   box-shadow: 0 0 0 2px rgba(67,97,238,0.2);
 }
 
+.form-error {
+  display: block;
+  margin-top: 6px;
+  color: #f87171;
+  font-size: .78rem;
+  line-height: 1.4;
+}
+
 /* BUTTON */
 .btn-submit {
   width: 100%;
