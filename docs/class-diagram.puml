@@ -1,0 +1,98 @@
+@startuml
+title UML Class Diagram Domain - Berlima Guest House
+
+left to right direction
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide circle
+hide empty methods
+
+package "Pusat Reservasi" {
+  class User <<domain>> {
+    + id: UUID
+    + namaLengkap: String
+    + email: String
+    + noTelepon: String
+    + noKtp: String
+    + role: String
+    + isActive: Boolean
+  }
+
+  class Booking <<domain>> {
+    + id: UUID
+    + kodeBooking: String
+    + tipeSewa: String
+    + tanggalCheckIn: Date
+    + tanggalCheckOut: Date
+    + durasi: Integer
+    + totalTagihan: Decimal
+    + status: String
+  }
+
+  class Room <<domain>> {
+    + id: UUID
+    + nomorKamar: String
+    + tipeKamar: String
+    + lantai: Integer
+    + fasilitas: List<String>
+    + hargaHarian: Decimal
+    + hargaBulanan: Decimal
+    + status: String
+  }
+
+  class RoomReview <<domain>> {
+    + id: UUID
+    + rating: Integer
+    + komentar: Text
+  }
+}
+
+package "Informasi dan Layanan Tamu" {
+  class GuestRequest <<domain>> {
+    + id: Integer
+    + nama: String
+    + phone: String
+    + email: String
+    + requestType: String
+    + jadwalMenginap: DateRange
+    + tipeKamar: String
+    + status: String
+  }
+
+  class GuestProfile <<domain>> {
+    + id: UUID
+    + name: String
+    + description: Text
+    + mainPhoto: String
+    + galleryItems: List
+    + contactItems: List
+    + locationAddress: Text
+  }
+
+  class SystemSetting <<domain>> {
+    + key: String
+    + value: Text
+    + deskripsi: Text
+    + heroTitle: Text
+    + roomsTitle: Text
+    + facilitiesTitle: Text
+  }
+
+  class Contact <<domain>> {
+  }
+}
+
+' Core domain relationships
+User "1" -- "*" Booking : membuat
+Booking "*" -- "1" Room : untuk kamar
+
+Room "1" *-down- "*" RoomReview : ulasan
+User "1" -down- "*" RoomReview : menulis
+
+' Supporting domain relationships
+GuestRequest "*" -- "0..1" Room : memilih
+GuestProfile "1" o-- "*" Contact : kanal kontak
+
+@enduml

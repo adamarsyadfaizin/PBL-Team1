@@ -1,0 +1,249 @@
+@startuml
+title Anatomy of Laravel Model Class Diagram
+
+left to right direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam defaultFontName Arial
+skinparam titleFontSize 28
+skinparam titleFontStyle plain
+
+skinparam class {
+  BackgroundColor #72C7E8
+  BorderColor #1B2A34
+  FontColor #111111
+  StereotypeFontColor #1B2A34
+  HeaderBackgroundColor #72C7E8
+  AttributeFontColor #111111
+  MethodFontColor #111111
+}
+
+skinparam note {
+  BackgroundColor #BFE8F7
+  BorderColor #1B2A34
+  FontColor #111111
+}
+
+skinparam Arrow {
+  Color #333333
+  FontColor #111111
+}
+
+class Booking <<entity>> {
+  +kode_booking
+  +user_id
+  +room_id
+  +tipe_sewa
+  +tanggal_check_in : date
+  +tanggal_check_out : date
+  +durasi
+  +harga_snapshot : decimal
+  +total_tagihan : decimal
+  +catatan_penyewa
+  +bukti_transfer
+  +status
+  +alasan_pembatalan
+  +dikonfirmasi_oleh
+  +tanggal_konfirmasi : datetime
+  --
+  #casts()
+  +user()
+  +room()
+  +confirmedBy()
+}
+
+class Contact <<entity>> {
+  --
+}
+
+class GuestProfile <<entity>> {
+  +name
+  +eyebrow
+  +description
+  +main_photo
+  +stories : array
+  +commitments : array
+  +important_items : array
+  +gallery_items : array
+  +contact_label
+  +contact_title
+  +contact_description
+  +contact_button_label
+  +contact_items : array
+  +platform_links : array
+  +contact_faqs : array
+  +location_notes : array
+  +masukkan : array
+  --
+  #casts()
+  +active()
+  +galleryItems()
+  +imageUrl()
+  +whatsappUrl()
+  +whatsappBaseUrl()
+  +defaults()
+}
+
+class GuestRequest <<entity>> {
+  +nama
+  +phone
+  +email
+  +request_type
+  +checkin
+  +checkout
+  +tipe_kamar
+  +tipe_sewa
+  +jumlah_tamu
+  +complaint_category
+  +pesan
+  +status
+  --
+}
+
+class Room <<entity>> {
+  +nomor_kamar
+  +lantai
+  +luas_m2 : decimal
+  +deskripsi
+  +fasilitas
+  +harga_harian : decimal
+  +harga_bulanan : decimal
+  +deposit : decimal
+  +status : RoomStatus
+  +foto_utama
+  +gallery_images : array
+  +video_path
+  +tipe_kamar
+  +is_published : boolean
+  --
+  #casts()
+  +bookings()
+  +reviews()
+  +getFasilitasAttribute()
+  +setFasilitasAttribute()
+}
+
+class RoomReview <<entity>> {
+  +room_id
+  +user_id
+  +rating : integer
+  +comment
+  --
+  #casts()
+  +room()
+  +user()
+}
+
+class SystemSetting <<entity>> {
+  +key
+  +value
+  +deskripsi
+  +hero_label
+  +hero_title
+  +hero_description
+  +how_label
+  +how_title
+  +rooms_label
+  +rooms_title
+  +gallery_label
+  +gallery_title
+  +facilities_label
+  +facilities_title
+  --
+  +home()
+  +highlightRoomIds()
+  +highlightRoomValue()
+  +defaults()
+}
+
+class User <<entity>> {
+  +nama_lengkap
+  +name
+  +email
+  +password_hash
+  +password
+  +no_telepon
+  +no_ktp
+  +role
+  +is_active : boolean
+  +phone
+  +ktp
+  --
+  #casts()
+  +getAuthPasswordName()
+  +getAuthPassword()
+  +getNameAttribute()
+  +setNameAttribute()
+  +getPhoneAttribute()
+  +setPhoneAttribute()
+  +getKtpAttribute()
+  +setKtpAttribute()
+  +setPasswordAttribute()
+  +reviews()
+  +bookings()
+  +isAdmin()
+}
+
+User "1" -- "0..*" Booking : user / belongsTo
+Room "1" -- "0..*" Booking : room / belongsTo
+User "1" -- "0..*" Booking : confirmedBy / belongsTo
+Room "1" -- "0..*" RoomReview : reviews / hasMany
+User "1" -- "0..*" RoomReview : reviews / hasMany
+
+note top of GuestProfile
+  Class penting untuk konten website.
+  Halaman kontak, FAQ, platform digital,
+  lokasi, dan feedback disimpan di model ini.
+end note
+
+note right of Contact
+  Model kosong / placeholder.
+  Tidak ada fillable, guarded,
+  casts, method, atau relasi.
+end note
+
+note top of Room
+  <b><color:#D9534F>Entity Class</color></b>
+  Semua model Laravel diberi
+  stereotype <<entity>>.
+end note
+
+note bottom of Room
+  <b><color:#D9534F>Class</color></b>
+  Kotak UML berisi nama class,
+  attribute, dan operation.
+end note
+
+note left of Room
+  <b><color:#D9534F>Attribute</color></b>
+  Diambil dari fillable,
+  casts, dan migration.
+end note
+
+note right of Room
+  <b><color:#D9534F>Operation</color></b>
+  Diambil dari function
+  yang ada di model.
+end note
+
+note bottom of Booking
+  <b><color:#D9534F>Association</color></b>
+  Garis relasi berasal dari
+  method Eloquent model.
+end note
+
+note bottom of User
+  <b><color:#D9534F>Multiplicity</color></b>
+  belongsTo: banyak data ini menuju 1 data tujuan.
+  hasMany: 1 data menuju 0..* data tujuan.
+end note
+
+note top of GuestProfile
+  <b><color:#D9534F>Note</color></b>
+  Note box menjelaskan
+  class penting.
+end note
+
+@enduml

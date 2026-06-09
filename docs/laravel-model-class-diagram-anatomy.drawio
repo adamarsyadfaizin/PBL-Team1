@@ -1,0 +1,160 @@
+<mxfile host="app.diagrams.net" modified="2026-06-09T00:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="laravel-model-anatomy" name="Laravel Model UML Anatomy">
+    <mxGraphModel dx="2200" dy="1400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Anatomy of Laravel Model Class Diagram" style="text;html=1;strokeColor=none;fillColor=none;fontSize=34;fontStyle=0;fontColor=#111111;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="360" y="20" width="900" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="room" value="&lt;div style=&quot;text-align:center&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;Room&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;+ nomor_kamar&lt;br&gt;+ lantai&lt;br&gt;+ luas_m2 : decimal&lt;br&gt;+ deskripsi&lt;br&gt;+ fasilitas&lt;br&gt;+ harga_harian : decimal&lt;br&gt;+ harga_bulanan : decimal&lt;br&gt;+ deposit : decimal&lt;br&gt;+ status : RoomStatus&lt;br&gt;+ foto_utama&lt;br&gt;+ gallery_images : array&lt;br&gt;+ video_path&lt;br&gt;+ tipe_kamar&lt;br&gt;+ is_published : boolean&lt;hr&gt;# casts()&lt;br&gt;+ bookings()&lt;br&gt;+ reviews()&lt;br&gt;+ getFasilitasAttribute()&lt;br&gt;+ setFasilitasAttribute()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#72C7E8;strokeColor=#1B2A34;fontColor=#111111;align=left;verticalAlign=top;spacing=8;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="650" y="170" width="260" height="380" as="geometry" />
+        </mxCell>
+
+        <mxCell id="booking" value="&lt;div style=&quot;text-align:center&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;Booking&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;+ kode_booking&lt;br&gt;+ user_id&lt;br&gt;+ room_id&lt;br&gt;+ tipe_sewa&lt;br&gt;+ tanggal_check_in : date&lt;br&gt;+ tanggal_check_out : date&lt;br&gt;+ durasi&lt;br&gt;+ harga_snapshot : decimal&lt;br&gt;+ total_tagihan : decimal&lt;br&gt;+ catatan_penyewa&lt;br&gt;+ bukti_transfer&lt;br&gt;+ status&lt;br&gt;+ alasan_pembatalan&lt;br&gt;+ dikonfirmasi_oleh&lt;br&gt;+ tanggal_konfirmasi : datetime&lt;hr&gt;# casts()&lt;br&gt;+ user()&lt;br&gt;+ room()&lt;br&gt;+ confirmedBy()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#72C7E8;strokeColor=#1B2A34;fontColor=#111111;align=left;verticalAlign=top;spacing=8;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="180" width="300" height="390" as="geometry" />
+        </mxCell>
+
+        <mxCell id="user" value="&lt;div style=&quot;text-align:center&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;User&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;+ nama_lengkap&lt;br&gt;+ name&lt;br&gt;+ email&lt;br&gt;+ password_hash&lt;br&gt;+ password&lt;br&gt;+ no_telepon&lt;br&gt;+ no_ktp&lt;br&gt;+ role&lt;br&gt;+ is_active : boolean&lt;br&gt;+ phone&lt;br&gt;+ ktp&lt;hr&gt;# casts()&lt;br&gt;+ getAuthPasswordName()&lt;br&gt;+ getAuthPassword()&lt;br&gt;+ getNameAttribute()&lt;br&gt;+ setNameAttribute()&lt;br&gt;+ getPhoneAttribute()&lt;br&gt;+ setPhoneAttribute()&lt;br&gt;+ getKtpAttribute()&lt;br&gt;+ setKtpAttribute()&lt;br&gt;+ setPasswordAttribute()&lt;br&gt;+ reviews()&lt;br&gt;+ bookings()&lt;br&gt;+ isAdmin()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#72C7E8;strokeColor=#1B2A34;fontColor=#111111;align=left;verticalAlign=top;spacing=8;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="650" y="680" width="290" height="420" as="geometry" />
+        </mxCell>
+
+        <mxCell id="review" value="&lt;div style=&quot;text-align:center&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;RoomReview&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;+ room_id&lt;br&gt;+ user_id&lt;br&gt;+ rating : integer&lt;br&gt;+ comment&lt;hr&gt;# casts()&lt;br&gt;+ room()&lt;br&gt;+ user()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#72C7E8;strokeColor=#1B2A34;fontColor=#111111;align=left;verticalAlign=top;spacing=8;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="760" width="250" height="190" as="geometry" />
+        </mxCell>
+
+        <mxCell id="guestProfile" value="&lt;div style=&quot;text-align:center&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;GuestProfile&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;+ name&lt;br&gt;+ eyebrow&lt;br&gt;+ description&lt;br&gt;+ main_photo&lt;br&gt;+ stories : array&lt;br&gt;+ commitments : array&lt;br&gt;+ important_items : array&lt;br&gt;+ gallery_items : array&lt;br&gt;+ contact_label&lt;br&gt;+ contact_title&lt;br&gt;+ contact_description&lt;br&gt;+ contact_button_label&lt;br&gt;+ contact_items : array&lt;br&gt;+ platform_links : array&lt;br&gt;+ contact_faqs : array&lt;br&gt;+ location_notes : array&lt;br&gt;+ masukkan : array&lt;hr&gt;# casts()&lt;br&gt;+ active()&lt;br&gt;+ galleryItems()&lt;br&gt;+ imageUrl()&lt;br&gt;+ whatsappUrl()&lt;br&gt;+ whatsappBaseUrl()&lt;br&gt;+ defaults()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#72C7E8;strokeColor=#1B2A34;fontColor=#111111;align=left;verticalAlign=top;spacing=8;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="110" y="190" width="300" height="480" as="geometry" />
+        </mxCell>
+
+        <mxCell id="guestRequest" value="&lt;div style=&quot;text-align:center&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;GuestRequest&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;+ nama&lt;br&gt;+ phone&lt;br&gt;+ email&lt;br&gt;+ request_type&lt;br&gt;+ checkin&lt;br&gt;+ checkout&lt;br&gt;+ tipe_kamar&lt;br&gt;+ tipe_sewa&lt;br&gt;+ jumlah_tamu&lt;br&gt;+ complaint_category&lt;br&gt;+ pesan&lt;br&gt;+ status&lt;hr&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#72C7E8;strokeColor=#1B2A34;fontColor=#111111;align=left;verticalAlign=top;spacing=8;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="110" y="760" width="250" height="270" as="geometry" />
+        </mxCell>
+
+        <mxCell id="setting" value="&lt;div style=&quot;text-align:center&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;SystemSetting&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;+ key&lt;br&gt;+ value&lt;br&gt;+ deskripsi&lt;br&gt;+ hero_label&lt;br&gt;+ hero_title&lt;br&gt;+ hero_description&lt;br&gt;+ how_label&lt;br&gt;+ how_title&lt;br&gt;+ rooms_label&lt;br&gt;+ rooms_title&lt;br&gt;+ gallery_label&lt;br&gt;+ gallery_title&lt;br&gt;+ facilities_label&lt;br&gt;+ facilities_title&lt;hr&gt;+ home()&lt;br&gt;+ highlightRoomIds()&lt;br&gt;+ highlightRoomValue()&lt;br&gt;+ defaults()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#72C7E8;strokeColor=#1B2A34;fontColor=#111111;align=left;verticalAlign=top;spacing=8;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1410" y="170" width="270" height="350" as="geometry" />
+        </mxCell>
+
+        <mxCell id="contact" value="&lt;div style=&quot;text-align:center&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;Contact&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;hr&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#72C7E8;strokeColor=#1B2A34;fontColor=#111111;align=left;verticalAlign=top;spacing=8;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1450" y="710" width="180" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="relRoomBooking" value="room / belongsTo" style="endArrow=none;html=1;rounded=0;strokeColor=#333333;fontSize=14;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="room" target="booking">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="relRoomBookingFrom" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="relRoomBooking">
+          <mxGeometry x="-0.86" y="-1" relative="1" as="geometry"><mxPoint x="22" y="-10" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="relRoomBookingTo" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="relRoomBooking">
+          <mxGeometry x="0.82" y="-1" relative="1" as="geometry"><mxPoint x="-22" y="-10" as="offset" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="relUserBooking" value="user / belongsTo" style="endArrow=none;html=1;rounded=0;strokeColor=#333333;fontSize=14;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="user" target="booking">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="relUserBookingFrom" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="relUserBooking">
+          <mxGeometry x="-0.86" y="-1" relative="1" as="geometry"><mxPoint x="20" y="-10" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="relUserBookingTo" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="relUserBooking">
+          <mxGeometry x="0.82" y="-1" relative="1" as="geometry"><mxPoint x="-24" y="-10" as="offset" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="relUserBookingConfirmed" value="confirmedBy / belongsTo" style="endArrow=none;html=1;rounded=0;strokeColor=#333333;fontSize=14;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="user" target="booking">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="970" y="1000" /><mxPoint x="970" y="620" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="relUserBookingConfirmedFrom" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="relUserBookingConfirmed">
+          <mxGeometry x="-0.84" y="-1" relative="1" as="geometry"><mxPoint x="20" y="-10" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="relUserBookingConfirmedTo" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="relUserBookingConfirmed">
+          <mxGeometry x="0.82" y="-1" relative="1" as="geometry"><mxPoint x="-24" y="-10" as="offset" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="relRoomReview" value="reviews / hasMany" style="endArrow=none;html=1;rounded=0;strokeColor=#333333;fontSize=14;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="room" target="review">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="980" y="500" /><mxPoint x="980" y="840" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="relRoomReviewFrom" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="relRoomReview">
+          <mxGeometry x="-0.88" y="-1" relative="1" as="geometry"><mxPoint x="22" y="-10" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="relRoomReviewTo" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="relRoomReview">
+          <mxGeometry x="0.82" y="-1" relative="1" as="geometry"><mxPoint x="-24" y="-10" as="offset" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="relUserReview" value="reviews / hasMany" style="endArrow=none;html=1;rounded=0;strokeColor=#333333;fontSize=14;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="user" target="review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="relUserReviewFrom" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="relUserReview">
+          <mxGeometry x="-0.86" y="-1" relative="1" as="geometry"><mxPoint x="20" y="-10" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="relUserReviewTo" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="relUserReview">
+          <mxGeometry x="0.82" y="-1" relative="1" as="geometry"><mxPoint x="-24" y="-10" as="offset" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="noteGuestProfile" value="&lt;b&gt;Note&lt;/b&gt;&lt;br&gt;GuestProfile adalah class penting untuk konten website. Halaman kontak, FAQ, platform digital, lokasi, dan feedback disimpan di model ini." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#BFE8F7;strokeColor=#1B2A34;fontSize=14;align=left;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="80" y="90" width="360" height="95" as="geometry" />
+        </mxCell>
+
+        <mxCell id="noteContact" value="&lt;b&gt;Contact kosong&lt;/b&gt;&lt;br&gt;Model ini hanya placeholder. Tidak ada fillable, guarded, casts, method, atau relasi di app/Models/Contact.php." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#BFE8F7;strokeColor=#1B2A34;fontSize=14;align=left;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1360" y="840" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="noteContactEdge" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#333333;" edge="1" parent="1" source="noteContact" target="contact">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="callEntity" value="&lt;font color=&quot;#D9534F&quot;&gt;&lt;b&gt;Entity Class&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;fontColor=#D9534F;" vertex="1" parent="1">
+          <mxGeometry x="560" y="110" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="callEntityEdge" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#D9534F;dashed=1;strokeWidth=3;" edge="1" parent="1" source="callEntity" target="room">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="callClass" value="&lt;font color=&quot;#D9534F&quot;&gt;&lt;b&gt;Class&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;fontColor=#D9534F;" vertex="1" parent="1">
+          <mxGeometry x="810" y="105" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="callClassEdge" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#D9534F;dashed=1;strokeWidth=3;" edge="1" parent="1" source="callClass" target="room">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="callAttribute" value="&lt;font color=&quot;#D9534F&quot;&gt;&lt;b&gt;Attribute&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;fontColor=#D9534F;" vertex="1" parent="1">
+          <mxGeometry x="470" y="305" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="callAttributeEdge" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#D9534F;dashed=1;strokeWidth=3;" edge="1" parent="1" source="callAttribute" target="room">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="callOperation" value="&lt;font color=&quot;#D9534F&quot;&gt;&lt;b&gt;Operation&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;fontColor=#D9534F;" vertex="1" parent="1">
+          <mxGeometry x="470" y="500" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="callOperationEdge" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#D9534F;dashed=1;strokeWidth=3;" edge="1" parent="1" source="callOperation" target="room">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="callAssociation" value="&lt;font color=&quot;#D9534F&quot;&gt;&lt;b&gt;Association&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;fontColor=#D9534F;" vertex="1" parent="1">
+          <mxGeometry x="930" y="130" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="callAssociationEdge" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#D9534F;dashed=1;strokeWidth=3;" edge="1" parent="1" source="callAssociation" target="relRoomBooking">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="callMultiplicity" value="&lt;font color=&quot;#D9534F&quot;&gt;&lt;b&gt;Multiplicity&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;fontColor=#D9534F;" vertex="1" parent="1">
+          <mxGeometry x="965" y="625" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="callMultiplicityEdge" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#D9534F;dashed=1;strokeWidth=3;" edge="1" parent="1" source="callMultiplicity" target="relUserBookingTo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="callNote" value="&lt;font color=&quot;#D9534F&quot;&gt;&lt;b&gt;Note&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;fontColor=#D9534F;" vertex="1" parent="1">
+          <mxGeometry x="220" y="55" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="callNoteEdge" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#D9534F;dashed=1;strokeWidth=3;" edge="1" parent="1" source="callNote" target="noteGuestProfile">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
