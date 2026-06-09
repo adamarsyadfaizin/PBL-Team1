@@ -6,10 +6,13 @@ namespace App\Filament\Resources;
 
 use App\Enums\RoomStatus;
 use App\Filament\Resources\RoomResource\Pages;
+use App\Filament\Resources\RoomResource\RelationManagers\ReviewsRelationManager;
 use App\Models\Room;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\BaseFileUpload;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
@@ -25,6 +28,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\HtmlString;
 
 class RoomResource extends Resource
 {
@@ -35,6 +39,8 @@ class RoomResource extends Resource
     protected static ?string $modelLabel = 'Kamar';
 
     protected static ?string $pluralModelLabel = 'Daftar Kamar';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Manajemen Utama';
 
     protected static ?int $navigationSort = 1;
 
@@ -126,7 +132,7 @@ class RoomResource extends Resource
                 ]),
 
             Section::make('Fasilitas & Media')
-                ->description('Fasilitas kamar dan foto utama.')
+                ->description('Fasilitas kamar, foto, galeri, dan video.')
                 ->icon('heroicon-o-sparkles')
                 ->columns(1)
                 ->schema([
@@ -136,7 +142,7 @@ class RoomResource extends Resource
                         ->suggestions([
                             'WiFi',
                             'AC',
-                            'Water Heater',
+                            'Pemanas Air',
                             'TV',
                             'Kulkas',
                             'Kamar Mandi Dalam',
@@ -147,15 +153,66 @@ class RoomResource extends Resource
                         ])
                         ->helperText('Ketik fasilitas lalu tekan Enter untuk menambahkan.'),
 
+                    Placeholder::make('media_preview')
+                        ->label('Media Saat Ini')
+                        ->content(fn (?Room $record): HtmlString => self::mediaPreview($record))
+                        ->columnSpanFull(),
+
                     FileUpload::make('foto_utama')
                         ->label('Foto Utama Kamar')
                         ->image()
                         ->disk('public')
                         ->directory('rooms')
+                        ->visibility('public')
+                        ->openable()
+                        ->downloadable()
+                        ->previewable()
+                        ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): ?array => self::uploadedFileMeta($component, $file, $storedFileNames))
+                        ->getOpenableFileUrlUsing(fn (string $file): string => self::publicFileUrl($file))
+                        ->getDownloadableFileUrlUsing(fn (string $file): string => self::publicFileUrl($file))
                         ->imageEditor()
+                        ->imagePreviewHeight('180')
+                        ->panelLayout('integrated')
                         ->maxSize(2048)
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                         ->helperText('Format: JPG, PNG, WebP. Maks. 2 MB.'),
+
+                    FileUpload::make('gallery_images')
+                        ->label('Galeri Foto Kamar')
+                        ->multiple()
+                        ->reorderable()
+                        ->image()
+                        ->disk('public')
+                        ->directory('rooms/gallery')
+                        ->visibility('public')
+                        ->openable()
+                        ->downloadable()
+                        ->previewable()
+                        ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): ?array => self::uploadedFileMeta($component, $file, $storedFileNames))
+                        ->getOpenableFileUrlUsing(fn (string $file): string => self::publicFileUrl($file))
+                        ->getDownloadableFileUrlUsing(fn (string $file): string => self::publicFileUrl($file))
+                        ->imageEditor()
+                        ->imagePreviewHeight('140')
+                        ->panelLayout('grid')
+                        ->maxFiles(10)
+                        ->maxSize(4096)
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        ->helperText('Tambahkan beberapa foto kamar. Format: JPG, PNG, WebP. Maks. 4 MB per file.'),
+
+                    FileUpload::make('video_path')
+                        ->label('Video Kamar')
+                        ->disk('public')
+                        ->directory('rooms/videos')
+                        ->visibility('public')
+                        ->openable()
+                        ->downloadable()
+                        ->previewable()
+                        ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): ?array => self::uploadedFileMeta($component, $file, $storedFileNames))
+                        ->getOpenableFileUrlUsing(fn (string $file): string => self::publicFileUrl($file))
+                        ->getDownloadableFileUrlUsing(fn (string $file): string => self::publicFileUrl($file))
+                        ->maxSize(51200)
+                        ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/ogg'])
+                        ->helperText('Opsional. Format: MP4, WebM, atau OGG. Maks. 50 MB.'),
 
                     Toggle::make('is_published')
                         ->label('Tampilkan di Landing Page')
@@ -163,6 +220,22 @@ class RoomResource extends Resource
                         ->default(true)
                         ->onColor('success')
                         ->offColor('danger'),
+                ]),
+
+            Section::make('Statistik Ulasan')
+                ->columns(2)
+                ->schema([
+                    Placeholder::make('rating_rata_rata')
+                        ->label('Rating Rata-rata')
+                        ->content(fn (?Room $record): string => $record
+                            ? number_format((float) ($record->reviews()->avg('rating') ?? 0), 1, ',', '.') . ' / 5'
+                            : '0,0 / 5'),
+
+                    Placeholder::make('jumlah_ulasan')
+                        ->label('Jumlah Ulasan')
+                        ->content(fn (?Room $record): string => $record
+                            ? (string) $record->reviews()->count()
+                            : '0'),
                 ]),
         ]);
     }
@@ -209,7 +282,7 @@ class RoomResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\IconColumn::make('is_published')
-                    ->label('Published')
+                    ->label('Terbit')
                     ->boolean()
                     ->alignCenter(),
 
@@ -218,6 +291,16 @@ class RoomResource extends Resource
                     ->disk('public')
                     ->circular()
                     ->toggleable(isToggledHiddenByDefault: false),
+
+                Tables\Columns\TextColumn::make('gallery_images')
+                    ->label('Galeri')
+                    ->formatStateUsing(fn (mixed $state): string => is_array($state) ? count($state) . ' foto' : '0 foto')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\IconColumn::make('video_path')
+                    ->label('Video')
+                    ->boolean()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
@@ -272,7 +355,9 @@ class RoomResource extends Resource
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            ReviewsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
@@ -290,5 +375,131 @@ class RoomResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery();
+    }
+
+    private static function mediaPreview(?Room $record): HtmlString
+    {
+        if (! $record) {
+            return new HtmlString('<span style="color:#6b7280">Simpan kamar terlebih dahulu untuk melihat pratinjau media.</span>');
+        }
+
+        $items = [];
+
+        if ($record->foto_utama) {
+            $items[] = self::imagePreviewItem('Foto utama', $record->foto_utama);
+        }
+
+        foreach (($record->gallery_images ?? []) as $index => $path) {
+            if (! is_string($path) || trim($path) === '') {
+                continue;
+            }
+
+            $items[] = self::imagePreviewItem('Galeri '.($index + 1), $path);
+        }
+
+        if ($record->video_path) {
+            $items[] = self::videoPreviewItem('Video kamar', $record->video_path);
+        }
+
+        if ($items === []) {
+            return new HtmlString('<span style="color:#6b7280">Belum ada foto atau video untuk kamar ini.</span>');
+        }
+
+        return new HtmlString(
+            '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">'
+            .implode('', $items)
+            .'</div>'
+        );
+    }
+
+    private static function imagePreviewItem(string $label, string $path): string
+    {
+        $url = self::publicFileUrl($path);
+        $escapedUrl = e($url);
+        $escapedLabel = e($label);
+
+        return '<figure style="margin:0;display:grid;gap:8px">'
+            .'<img src="'.$escapedUrl.'" alt="'.$escapedLabel.'" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;background:#f9fafb">'
+            .'<figcaption style="display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#4b5563">'
+            .'<span>'.$escapedLabel.'</span>'
+            .'<a href="'.$escapedUrl.'" target="_blank" rel="noopener noreferrer" style="color:#2563eb;font-weight:600;text-decoration:underline">Buka</a>'
+            .'</figcaption>'
+            .'</figure>';
+    }
+
+    private static function videoPreviewItem(string $label, string $path): string
+    {
+        $url = self::publicFileUrl($path);
+        $escapedUrl = e($url);
+        $escapedLabel = e($label);
+
+        return '<figure style="margin:0;display:grid;gap:8px">'
+            .'<video src="'.$escapedUrl.'" controls preload="metadata" style="width:100%;max-height:180px;border-radius:8px;border:1px solid #e5e7eb;background:#111827"></video>'
+            .'<figcaption style="display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#4b5563">'
+            .'<span>'.$escapedLabel.'</span>'
+            .'<a href="'.$escapedUrl.'" target="_blank" rel="noopener noreferrer" style="color:#2563eb;font-weight:600;text-decoration:underline">Buka</a>'
+            .'</figcaption>'
+            .'</figure>';
+    }
+
+    /**
+     * Filament's default upload metadata URL follows the disk URL from APP_URL.
+     * In local admin sessions the app is often opened on 127.0.0.1 with a port,
+     * so a relative URL keeps FilePond on the same origin and prevents
+     * "Waiting for size" from hanging forever.
+     *
+     * @param  string|array<string, string>|null  $storedFileNames
+     * @return array{name: string, size: int, type: ?string, url: string}
+     */
+    private static function uploadedFileMeta(BaseFileUpload $component, string $file, string|array|null $storedFileNames): ?array
+    {
+        $storage = $component->getDisk();
+
+        try {
+            if ($component->shouldFetchFileInformation() && ! $storage->exists($file)) {
+                return null;
+            }
+
+            $size = $component->shouldFetchFileInformation() ? $storage->size($file) : 0;
+            $type = $component->shouldFetchFileInformation() ? $storage->mimeType($file) : null;
+        } catch (\Throwable) {
+            return null;
+        }
+
+        $name = basename($file);
+
+        if ($component->isMultiple() && is_array($storedFileNames)) {
+            $name = $storedFileNames[$file] ?? $name;
+        } elseif (is_string($storedFileNames)) {
+            $name = $storedFileNames;
+        }
+
+        return [
+            'name' => $name,
+            'size' => $size,
+            'type' => $type,
+            'url' => self::publicFileUrl($file),
+        ];
+    }
+
+    private static function publicFileUrl(string $path): string
+    {
+        if (trim($path) === '') {
+            return '#';
+        }
+
+        $path = trim($path);
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        $path = ltrim($path, '/');
+
+        if (str_starts_with($path, 'storage/')) {
+            $path = substr($path, strlen('storage/'));
+        }
+
+        return '/storage/'.$path;
     }
 }
