@@ -32,12 +32,13 @@
         $hargaHarian = 'Rp ' . number_format((float) $room->harga_harian / 1000, 0, ',', '.') . 'k';
         $averageRating = round((float) ($room->reviews_avg_rating ?? 0), 1);
         $reviewsCount = (int) ($room->reviews_count ?? 0);
+        $fotoUtamaUrl = $room->foto_utama_url;
       @endphp
 
       <a href="{{ $detailUrl }}" class="room-card {{ $index === 1 ? 'featured' : '' }} reveal home-room-card">
         <div class="room-img">
-          @if ($room->foto_utama)
-            <img src="{{ asset('storage/' . $room->foto_utama) }}" alt="Foto Kamar {{ $room->nomor_kamar }}" loading="lazy">
+          @if ($fotoUtamaUrl)
+            <img src="{{ $fotoUtamaUrl }}" alt="Foto Kamar {{ $room->nomor_kamar }}" loading="lazy">
           @else
             <div class="room-img-placeholder {{ $index === 1 ? 'suite' : ($index === 2 ? 'standard' : 'deluxe') }}">
               <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" opacity=".2">
@@ -102,7 +103,7 @@
   <div class="preview-grid">
     @foreach ($guestProfile->galleryItems(4) as $item)
       <a href="{{ route('about') }}#about-gallery" class="preview-item reveal">
-        <img src="{{ !empty($item['image']) ? asset('storage/' . $item['image']) : 'https://placehold.co/600x400/E2E8F0/1E293B?text=Gallery' }}" alt="{{ $item['title'] ?? 'Gallery Berlima Guest House' }}">
+        <img src="{{ \App\Models\GuestProfile::imageUrl($item['image'] ?? null) }}" alt="{{ $item['title'] ?? 'Gallery Berlima Guest House' }}">
         <span class="caption">{{ $item['title'] ?? 'Berlima Guest House' }}</span>
       </a>
     @endforeach

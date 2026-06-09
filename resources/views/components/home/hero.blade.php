@@ -10,7 +10,7 @@
     $averageRating = (float) ($stats['average_rating'] ?? 0);
     $reviewsCount = (int) ($stats['reviews_count'] ?? 0);
     $hasHeroImage = filled($guestProfile->main_photo);
-    $heroImage = $hasHeroImage ? asset('storage/' . $guestProfile->main_photo) : null;
+    $heroImage = $hasHeroImage ? \App\Models\GuestProfile::imageUrl($guestProfile->main_photo) : null;
 @endphp
 
 <section class="hero" id="home">

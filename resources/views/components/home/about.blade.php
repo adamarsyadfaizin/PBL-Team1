@@ -17,6 +17,7 @@
         $recommendedRoom?->lantai ? 'Lantai ' . $recommendedRoom->lantai : null,
         $recommendedRoom?->luas_m2 ? number_format((float) $recommendedRoom->luas_m2, 0, ',', '.') . ' m2' : null,
     ])->filter()->implode(' · ');
+    $recommendedRoomPhotoUrl = $recommendedRoom?->foto_utama_url;
 @endphp
 
 <section class="how">
@@ -54,16 +55,16 @@
       <div class="how-visual reveal">
         <div class="how-card-big">
           <div class="how-card-img">
-            @if ($recommendedRoom?->foto_utama)
+            @if ($recommendedRoomPhotoUrl)
               <img
-                src="{{ asset('storage/' . $recommendedRoom->foto_utama) }}"
+                src="{{ $recommendedRoomPhotoUrl }}"
                 alt="Foto Kamar {{ $recommendedRoom->nomor_kamar }}"
                 loading="lazy"
                 onerror="this.hidden=true;this.nextElementSibling.hidden=false;"
               >
             @endif
 
-            <div class="how-card-placeholder" @if ($recommendedRoom?->foto_utama) hidden @endif>
+            <div class="how-card-placeholder" @if ($recommendedRoomPhotoUrl) hidden @endif>
               <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                 <rect x="3" y="3" width="18" height="18" rx="2"/>
                 <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -121,11 +122,11 @@
                 <span class="{{ $star <= (int) round($averageRating) ? 'is-filled' : '' }}">&#9733;</span>
               @endfor
             </div>
-            <h5>{{ number_format($averageRating, 1, ',', '.') }} rating rata-rata</h5>
+            <h5>{{ number_format($averageRating, 1, ',', '.') }} penilaian rata-rata</h5>
             <p>{{ $reviewsCount }} ulasan aktual</p>
           @else
             <h5>Belum ada ulasan</h5>
-            <p>Rating akan muncul setelah user memberi ulasan.</p>
+            <p>Penilaian akan muncul setelah pengguna memberi ulasan.</p>
           @endif
         </div>
       </div>
