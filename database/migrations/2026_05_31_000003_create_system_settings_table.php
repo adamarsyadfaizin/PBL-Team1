@@ -15,6 +15,7 @@ return new class extends Migration
         'hero_label',
         'hero_title',
         'hero_description',
+        'hero_image',
         'how_label',
         'how_title',
         'how_description',
