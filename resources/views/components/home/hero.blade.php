@@ -9,8 +9,9 @@
     $roomCount = (int) ($stats['rooms_count'] ?? 0);
     $averageRating = (float) ($stats['average_rating'] ?? 0);
     $reviewsCount = (int) ($stats['reviews_count'] ?? 0);
-    $hasHeroImage = filled($guestProfile->main_photo);
-    $heroImage = $hasHeroImage ? \App\Models\GuestProfile::imageUrl($guestProfile->main_photo) : null;
+    $heroImagePath = $settings->hero_image ?: $guestProfile->main_photo;
+    $hasHeroImage = filled($heroImagePath);
+    $heroImage = $hasHeroImage ? \App\Models\SystemSetting::imageUrl($heroImagePath) : null;
 @endphp
 
 <section class="hero" id="home">
