@@ -7,6 +7,7 @@ namespace App\Filament\Resources;
 use App\Enums\RoomStatus;
 use App\Filament\Resources\RoomResource\Pages;
 use App\Filament\Resources\RoomResource\RelationManagers\ReviewsRelationManager;
+use App\Filament\Support\PublicFileUpload;
 use App\Models\Room;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -167,9 +168,9 @@ class RoomResource extends Resource
                         ->openable()
                         ->downloadable()
                         ->previewable()
-                        ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): ?array => self::uploadedFileMeta($component, $file, $storedFileNames))
-                        ->getOpenableFileUrlUsing(fn (string $file): string => self::publicFileUrl($file))
-                        ->getDownloadableFileUrlUsing(fn (string $file): string => self::publicFileUrl($file))
+                        ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): array => PublicFileUpload::uploadedFileMeta($component, $file, $storedFileNames))
+                        ->getOpenableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
+                        ->getDownloadableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
                         ->imageEditor()
                         ->imagePreviewHeight('180')
                         ->panelLayout('integrated')
@@ -188,9 +189,9 @@ class RoomResource extends Resource
                         ->openable()
                         ->downloadable()
                         ->previewable()
-                        ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): ?array => self::uploadedFileMeta($component, $file, $storedFileNames))
-                        ->getOpenableFileUrlUsing(fn (string $file): string => self::publicFileUrl($file))
-                        ->getDownloadableFileUrlUsing(fn (string $file): string => self::publicFileUrl($file))
+                        ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): array => PublicFileUpload::uploadedFileMeta($component, $file, $storedFileNames))
+                        ->getOpenableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
+                        ->getDownloadableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
                         ->imageEditor()
                         ->imagePreviewHeight('140')
                         ->panelLayout('grid')
@@ -207,9 +208,9 @@ class RoomResource extends Resource
                         ->openable()
                         ->downloadable()
                         ->previewable()
-                        ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): ?array => self::uploadedFileMeta($component, $file, $storedFileNames))
-                        ->getOpenableFileUrlUsing(fn (string $file): string => self::publicFileUrl($file))
-                        ->getDownloadableFileUrlUsing(fn (string $file): string => self::publicFileUrl($file))
+                        ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): array => PublicFileUpload::uploadedFileMeta($component, $file, $storedFileNames))
+                        ->getOpenableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
+                        ->getDownloadableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
                         ->maxSize(51200)
                         ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/ogg'])
                         ->helperText('Opsional. Format: MP4, WebM, atau OGG. Maks. 50 MB.'),
@@ -500,6 +501,6 @@ class RoomResource extends Resource
             $path = substr($path, strlen('storage/'));
         }
 
-        return '/storage/'.$path;
+        return PublicFileUpload::url($path) ?? '#';
     }
 }

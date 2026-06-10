@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BookingResource\Pages;
+use App\Filament\Support\PublicFileUpload;
 use App\Models\Booking;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\BaseFileUpload;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
@@ -127,6 +129,11 @@ class BookingResource extends Resource
                         ->directory('booking-payment-proofs')
                         ->downloadable()
                         ->openable()
+                        ->previewable()
+                        ->fetchFileInformation(false)
+                        ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): array => PublicFileUpload::uploadedFileMeta($component, $file, $storedFileNames))
+                        ->getOpenableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
+                        ->getDownloadableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
                         ->disabled()
                         ->dehydrated(false)
                         ->columnSpanFull(),
@@ -302,7 +309,7 @@ class BookingResource extends Resource
             $path = substr($path, strlen('storage/'));
         }
 
-        return '/storage/'.$path;
+        return PublicFileUpload::url($path);
     }
 
     private static function paymentProofPreview(?Booking $record): HtmlString

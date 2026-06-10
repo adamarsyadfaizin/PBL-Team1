@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\GuestProfileResource\Pages;
+use App\Filament\Support\PublicFileUpload;
 use App\Models\GuestProfile;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\BaseFileUpload;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
@@ -49,7 +51,20 @@ class GuestProfileResource extends Resource
                         ->image()
                         ->disk('public')
                         ->directory('guest-profile')
+                        ->visibility('public')
+                        ->openable()
+                        ->downloadable()
+                        ->previewable()
+                        ->fetchFileInformation(false)
+                        ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): array => PublicFileUpload::uploadedFileMeta($component, $file, $storedFileNames))
+                        ->getOpenableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
+                        ->getDownloadableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
                         ->imageEditor()
+                        ->imagePreviewHeight('220')
+                        ->panelLayout('integrated')
+                        ->maxSize(4096)
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        ->helperText('Format: JPG, PNG, WebP. Maks. 4 MB.')
                         ->columnSpanFull(),
                 ]),
 
@@ -111,7 +126,19 @@ class GuestProfileResource extends Resource
                                 ->image()
                                 ->disk('public')
                                 ->directory('guest-gallery')
+                                ->visibility('public')
+                                ->openable()
+                                ->downloadable()
+                                ->previewable()
+                                ->fetchFileInformation(false)
+                                ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): array => PublicFileUpload::uploadedFileMeta($component, $file, $storedFileNames))
+                                ->getOpenableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
+                                ->getDownloadableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
                                 ->imageEditor()
+                                ->imagePreviewHeight('140')
+                                ->panelLayout('integrated')
+                                ->maxSize(4096)
+                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                 ->required(),
                         ])
                         ->columns(2)

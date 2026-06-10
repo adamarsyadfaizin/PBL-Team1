@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SystemSettingResource\Pages;
+use App\Filament\Support\PublicFileUpload;
 use App\Models\Room;
 use App\Models\SystemSetting;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\BaseFileUpload;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -44,6 +47,26 @@ class SystemSettingResource extends Resource
                 ->schema([
                     TextInput::make('hero_label')->label('Label Hero')->maxLength(255),
                     Textarea::make('hero_title')->label('Judul Hero')->rows(3)->required(),
+                    FileUpload::make('hero_image')
+                        ->label('Foto Hero Beranda')
+                        ->image()
+                        ->disk('public')
+                        ->directory('home/hero')
+                        ->visibility('public')
+                        ->openable()
+                        ->downloadable()
+                        ->previewable()
+                        ->fetchFileInformation(false)
+                        ->getUploadedFileUsing(fn (BaseFileUpload $component, string $file, string|array|null $storedFileNames): array => PublicFileUpload::uploadedFileMeta($component, $file, $storedFileNames))
+                        ->getOpenableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
+                        ->getDownloadableFileUrlUsing(fn (string $file): ?string => PublicFileUpload::url($file))
+                        ->imageEditor()
+                        ->imagePreviewHeight('220')
+                        ->panelLayout('integrated')
+                        ->maxSize(4096)
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        ->helperText('Foto ini khusus untuk hero section Beranda. Format: JPG, PNG, WebP. Maks. 4 MB.')
+                        ->columnSpanFull(),
                     Textarea::make('hero_description')->label('Deskripsi Hero')->rows(3)->columnSpanFull(),
                 ]),
 
